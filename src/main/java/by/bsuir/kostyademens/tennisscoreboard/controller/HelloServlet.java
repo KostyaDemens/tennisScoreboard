@@ -1,4 +1,4 @@
-package by.bsuir.kostyademens.tennisscoreboard;
+package by.bsuir.kostyademens.tennisscoreboard.controller;
 
 import java.io.*;
 
