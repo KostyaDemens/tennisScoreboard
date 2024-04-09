@@ -1,7 +1,4 @@
-body {
-    background-color: #87CEEB;
-    font-weight: bold;
-}
+@import url("common.css");
 
 .links_container {
     display: flex;
@@ -19,3 +16,5 @@ body {
     border-radius: 5px;
     color: #333;
 }
+
+

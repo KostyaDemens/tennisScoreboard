@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 50px;
+}
+
+.input-container {
+    display: flex; /* Используем Flexbox */
+    justify-content: space-between; /* Располагаем контейнеры рядом */
+    margin-top: 20px;
+}
+
+input {
+    width: 200px;
+    padding: 10px;
+    margin: 5px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
