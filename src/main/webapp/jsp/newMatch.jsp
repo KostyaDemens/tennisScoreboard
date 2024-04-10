@@ -9,7 +9,7 @@
   <title>Tennis</title>
 </head>
 <body>
-<h1>Create match</h1>
+<h1>Create new match</h1>
 <div class="input-container">
   <div>
     <p>Player 1</p>
