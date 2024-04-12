@@ -1,24 +1,21 @@
 package by.bsuir.kostyademens.tennisscoreboard;
 
-import by.bsuir.kostyademens.tennisscoreboard.model.Player;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import by.bsuir.kostyademens.tennisscoreboard.dao.PlayerDao;
+import by.bsuir.kostyademens.tennisscoreboard.util.SessionFactoryUtil;
+
 
 public class TestMain {
     public static void main(String[] args) {
-        Configuration configuration = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Player.class);
+        SessionFactoryUtil sessionFactoryUtil = new SessionFactoryUtil();
+        sessionFactoryUtil.init();
 
-        SessionFactory factory = configuration.buildSessionFactory();
-
-        try (factory) {
-            Session session = factory.getCurrentSession();
-            session.beginTransaction();
-
-            Player player = session.get(Player.class, 8);
-            System.out.println(player);
-            session.getTransaction().commit();
-
+        try {
+            PlayerDao playerDao = new PlayerDao(sessionFactoryUtil);
+            playerDao.findByName("IGOR");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            sessionFactoryUtil.shotDown();
         }
     }
 }

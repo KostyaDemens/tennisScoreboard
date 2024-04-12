@@ -19,7 +19,7 @@ public class NewMatchServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //TODO Стоит оставить такой вариант создания игрока, или же лучше сразу в конструкторе req.getParameter("player-1")
+        //TODO Стоит оставить такой вариант создания игрока, или же лучше сразу в конструкторе Player-а req.getParameter("player-1")
         String playerOne = req.getParameter("player-1");
         String playerTwo = req.getParameter("player-2");
 
