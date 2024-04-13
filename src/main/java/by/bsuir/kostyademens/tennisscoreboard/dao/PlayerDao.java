@@ -5,14 +5,16 @@ import by.bsuir.kostyademens.tennisscoreboard.util.SessionFactoryUtil;
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
 
+import java.util.Optional;
+
 public class PlayerDao {
-    private SessionFactoryUtil sessionFactoryUtil = new SessionFactoryUtil();
+    private final SessionFactoryUtil sessionFactoryUtil;
 
     public PlayerDao(SessionFactoryUtil sessionFactoryUtil) {
         this.sessionFactoryUtil = sessionFactoryUtil;
     }
 
-    public Player findByName(String name) {
+    public Optional<Player> findByName(String name) {
         try (Session session = sessionFactoryUtil.getSession()) {
             session.beginTransaction();
             Player player = session.createQuery("FROM Player p WHERE p.name = :name", Player.class)
@@ -20,17 +22,18 @@ public class PlayerDao {
                     .getSingleResult();
             session.getTransaction().commit();
             System.out.println(player.getId());
-            return player;
+            return Optional.of(player);
         } catch (NoResultException e) {
             throw new RuntimeException("Нету такого имени");
         }
     }
 
-    public void save(Player player) {
+    public Player save(Player player) {
         try (Session session = sessionFactoryUtil.getSession()) {
             session.beginTransaction();
             session.persist(player);
             session.getTransaction().commit();
+            return player;
         }
     }
 

@@ -31,5 +31,4 @@ public class OngoingMatchesService {
         ongoingMatches.remove(uuid);
     }
 
-
 }

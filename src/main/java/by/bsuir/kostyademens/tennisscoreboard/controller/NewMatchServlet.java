@@ -2,6 +2,7 @@ package by.bsuir.kostyademens.tennisscoreboard.controller;
 
 
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
+import by.bsuir.kostyademens.tennisscoreboard.service.NewMatchService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,6 +13,8 @@ import java.io.IOException;
 
 @WebServlet("/new-match")
 public class NewMatchServlet extends HttpServlet {
+
+    private final NewMatchService newMatchService = new NewMatchService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/jsp/newMatch.jsp").forward(req, resp);
@@ -26,6 +29,7 @@ public class NewMatchServlet extends HttpServlet {
         Player firstPlayer = new Player(playerOne.toUpperCase());
         Player secondPlayer = new Player(playerTwo.toUpperCase());
 
+        newMatchService.createNewMatch(firstPlayer, secondPlayer);
 
 
     }
