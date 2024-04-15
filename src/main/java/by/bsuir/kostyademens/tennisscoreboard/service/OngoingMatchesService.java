@@ -1,6 +1,7 @@
 package by.bsuir.kostyademens.tennisscoreboard.service;
 
 
+import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 
 import java.util.HashMap;
@@ -10,20 +11,20 @@ import java.util.UUID;
 
 public class OngoingMatchesService {
 
-    private final Map<String, Match> ongoingMatches;
+    private final Map<String, MatchDto> ongoingMatches;
 
     public OngoingMatchesService() {
         ongoingMatches = new HashMap<>();
     }
 
-    public String add(Match match) {
+    public String add(MatchDto match) {
         String uuid = UUID.randomUUID().toString();
         while (ongoingMatches.containsKey(uuid)) uuid = UUID.randomUUID().toString();
         ongoingMatches.put(uuid, match);
         return uuid;
     }
 
-    public Optional<Match> get(String uuid) {
+    public Optional<MatchDto> get(String uuid) {
         return ongoingMatches.containsKey(uuid) ? Optional.of(ongoingMatches.get(uuid)) : Optional.empty();
     }
 

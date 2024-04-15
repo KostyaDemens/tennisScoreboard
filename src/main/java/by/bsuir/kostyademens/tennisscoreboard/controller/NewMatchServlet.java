@@ -1,9 +1,12 @@
 package by.bsuir.kostyademens.tennisscoreboard.controller;
 
 
+import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
 import by.bsuir.kostyademens.tennisscoreboard.dto.PlayerDto;
+import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.service.NewMatchService;
+import by.bsuir.kostyademens.tennisscoreboard.service.OngoingMatchesService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,6 +19,7 @@ import java.io.IOException;
 public class NewMatchServlet extends HttpServlet {
 
     private final NewMatchService newMatchService = new NewMatchService();
+    private final OngoingMatchesService ongoingMatchesService = new OngoingMatchesService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/jsp/newMatch.jsp").forward(req, resp);
@@ -23,14 +27,15 @@ public class NewMatchServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //TODO Стоит оставить такой вариант создания игрока, или же лучше сразу в конструкторе Player-а req.getParameter("player-1")
         String playerOne = req.getParameter("player-1");
         String playerTwo = req.getParameter("player-2");
 
         Player firstPlayer = new Player(playerOne.toUpperCase());
         Player secondPlayer = new Player(playerTwo.toUpperCase());
 
-        newMatchService.createNewMatch(firstPlayer, secondPlayer);
+        MatchDto match = newMatchService.createNewMatch(firstPlayer, secondPlayer);
+        String uuid = ongoingMatchesService.add(match);
+        resp.sendRedirect("match-score?uuid=" + uuid);
 
     }
 }
