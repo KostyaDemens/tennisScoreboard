@@ -1,6 +1,7 @@
 package by.bsuir.kostyademens.tennisscoreboard.controller;
 
 
+import by.bsuir.kostyademens.tennisscoreboard.dto.PlayerDto;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.service.NewMatchService;
 import jakarta.servlet.ServletException;
@@ -30,7 +31,6 @@ public class NewMatchServlet extends HttpServlet {
         Player secondPlayer = new Player(playerTwo.toUpperCase());
 
         newMatchService.createNewMatch(firstPlayer, secondPlayer);
-
 
     }
 }

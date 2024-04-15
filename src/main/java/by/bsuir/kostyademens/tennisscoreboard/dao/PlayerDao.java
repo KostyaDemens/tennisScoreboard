@@ -5,6 +5,7 @@ import by.bsuir.kostyademens.tennisscoreboard.util.SessionFactoryUtil;
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
 
+import java.util.List;
 import java.util.Optional;
 
 public class PlayerDao {
@@ -12,6 +13,7 @@ public class PlayerDao {
 
     public PlayerDao(SessionFactoryUtil sessionFactoryUtil) {
         this.sessionFactoryUtil = sessionFactoryUtil;
+        sessionFactoryUtil.init();
     }
 
     public Optional<Player> findByName(String name) {
@@ -24,7 +26,7 @@ public class PlayerDao {
             System.out.println(player.getId());
             return Optional.of(player);
         } catch (NoResultException e) {
-            throw new RuntimeException("Нету такого имени");
+            return Optional.empty();
         }
     }
 
@@ -36,6 +38,8 @@ public class PlayerDao {
             return player;
         }
     }
+
+
 
 
 }
