@@ -1,8 +1,6 @@
 package by.bsuir.kostyademens.tennisscoreboard.controller;
 
 
-import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
-import by.bsuir.kostyademens.tennisscoreboard.dto.PlayerDto;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.service.NewMatchService;
@@ -33,7 +31,7 @@ public class NewMatchServlet extends HttpServlet {
         Player firstPlayer = new Player(playerOne.toUpperCase());
         Player secondPlayer = new Player(playerTwo.toUpperCase());
 
-        MatchDto match = newMatchService.createNewMatch(firstPlayer, secondPlayer);
+        Match match = newMatchService.createNewMatch(firstPlayer, secondPlayer);
         String uuid = ongoingMatchesService.add(match);
         resp.sendRedirect("match-score?uuid=" + uuid);
 

@@ -1,30 +1,29 @@
 package by.bsuir.kostyademens.tennisscoreboard.service;
 
 
-import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class OngoingMatchesService {
 
-    private final Map<String, MatchDto> ongoingMatches;
+    private final Map<String, Match> ongoingMatches;
 
     public OngoingMatchesService() {
-        ongoingMatches = new HashMap<>();
+        ongoingMatches = new ConcurrentHashMap<>();
     }
 
-    public String add(MatchDto match) {
+    public String add(Match match) {
         String uuid = UUID.randomUUID().toString();
         while (ongoingMatches.containsKey(uuid)) uuid = UUID.randomUUID().toString();
         ongoingMatches.put(uuid, match);
         return uuid;
     }
 
-    public Optional<MatchDto> get(String uuid) {
+    public Optional<Match> get(String uuid) {
         return ongoingMatches.containsKey(uuid) ? Optional.of(ongoingMatches.get(uuid)) : Optional.empty();
     }
 
