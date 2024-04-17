@@ -1,6 +1,7 @@
 package by.bsuir.kostyademens.tennisscoreboard.service;
 
 
+import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 
 import java.util.Map;
@@ -23,8 +24,8 @@ public class OngoingMatchesService {
         return uuid;
     }
 
-    public Optional<Match> get(String uuid) {
-        return ongoingMatches.containsKey(uuid) ? Optional.of(ongoingMatches.get(uuid)) : Optional.empty();
+    public Match get(String uuid) {
+        return (ongoingMatches.getOrDefault(uuid, null));
     }
 
     public void remove(String uuid) {

@@ -1,5 +1,7 @@
 package by.bsuir.kostyademens.tennisscoreboard.controller;
 
+import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
+import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.service.OngoingMatchesService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet("/match-score")
 public class MatchScoreServlet extends HttpServlet {
@@ -16,12 +19,14 @@ public class MatchScoreServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uuid = req.getParameter("uuid");
-
-        System.out.println(uuid);
+        Match match = ongoingMatchesService.get(uuid);
+        req.setAttribute("player-1", match.getPlayer1());
+        req.setAttribute("player-2", match.getPlayer2());
+        req.getRequestDispatcher("/jsp/matchScore.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+
     }
 }
