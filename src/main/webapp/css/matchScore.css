@@ -1,23 +1,35 @@
-body {
+.container {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    /*padding: 50px;*/
-    font-family: "Roboto", sans-serif;
+    height: 100vh;
 }
 
+/* Стили для таблицы */
 table {
-    width: 650px;
-    /*border-top: 7px solid rgb(43, 129, 17);*/
+    width: 80%;
+    max-width: 600px;
     border-collapse: collapse;
-    text-align: center;
     margin-bottom: 20px;
-    border: 1px solid #dddddd;
+}
+table, th, td {
+    border: 1px solid black;
+}
+th, td {
+    padding: 10px;
+    text-align: center;
 }
 
-td {
-    text-align: center;
+/* Стили для кнопок */
+.ui-button {
+    display: flex;
+    gap: 150px;
+    justify-content: space-between;
+}
+.first-button, .second-button {
     padding: 10px;
-    border: 3px solid rgb(43, 129, 17);
+    background-color: white;
+    color: black;
+    cursor: pointer;
 }
