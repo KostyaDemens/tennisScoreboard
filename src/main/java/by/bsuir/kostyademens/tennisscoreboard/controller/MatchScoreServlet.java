@@ -27,8 +27,8 @@ public class MatchScoreServlet extends HttpServlet {
         Match match = onGoingMatchesService.get(uuid);
 
         //Атрибуты, который мы хотим получить в matchScore.jsp
-        req.setAttribute("player-1", match.getPlayer1());
-        req.setAttribute("player-2", match.getPlayer2());
+        req.setAttribute("playerOneName", match.getPlayer1().getName());
+        req.setAttribute("playerTwoName", match.getPlayer2().getName());
         req.getRequestDispatcher("/jsp/matchScore.jsp").forward(req, resp);
     }
 

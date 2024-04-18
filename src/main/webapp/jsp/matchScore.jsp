@@ -19,13 +19,13 @@
             <td>POINTS</td>
         </tr>
         <tr>
-            <td>${player-1}</td>
+            <td>${playerOneName}</td>
             <td>0</td>
             <td>0</td>
             <td>0</td>
         </tr>
         <tr>
-            <td></td>
+            <td>${playerTwoName}</td>
             <td>4</td>
             <td>0</td>
             <td>0</td>
