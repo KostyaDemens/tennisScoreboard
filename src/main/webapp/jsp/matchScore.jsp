@@ -19,7 +19,7 @@
             <td>POINTS</td>
         </tr>
         <tr>
-            <td>${requestScope['player-1'].name}</td>
+            <td>${player-1}</td>
             <td>0</td>
             <td>0</td>
             <td>0</td>

@@ -1,11 +1,11 @@
 package by.bsuir.kostyademens.tennisscoreboard.controller;
 
 
-import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.service.NewMatchService;
-import by.bsuir.kostyademens.tennisscoreboard.service.OngoingMatchesService;
+import by.bsuir.kostyademens.tennisscoreboard.service.OnGoingMatchesService;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,12 +13,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @WebServlet("/new-match")
 public class NewMatchServlet extends HttpServlet {
+private NewMatchService newMatchService;
+private OnGoingMatchesService onGoingMatchesService;
 
-    private final NewMatchService newMatchService = new NewMatchService();
-    private final OngoingMatchesService ongoingMatchesService = new OngoingMatchesService();
+    @Override
+    public void init(ServletConfig config) {
+        newMatchService = (NewMatchService) config.getServletContext().getAttribute("newMatchService");
+        onGoingMatchesService = (OnGoingMatchesService) config.getServletContext().getAttribute("onGoingMatchesService");
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/jsp/newMatch.jsp").forward(req, resp);
@@ -33,7 +40,7 @@ public class NewMatchServlet extends HttpServlet {
         Player secondPlayer = new Player(playerTwo.toUpperCase());
 
         Match match = newMatchService.createNewMatch(firstPlayer, secondPlayer);
-        String uuid = ongoingMatchesService.add(match);
+        UUID uuid = onGoingMatchesService.add(match);
         resp.sendRedirect("match-score?uuid=" + uuid);
 
     }

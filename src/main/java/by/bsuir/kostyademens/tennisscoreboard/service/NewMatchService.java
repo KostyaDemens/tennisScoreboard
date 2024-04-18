@@ -10,7 +10,6 @@ import by.bsuir.kostyademens.tennisscoreboard.util.SessionFactoryUtil;
 
 public class NewMatchService {
 
-    private final MatchDtoMapper matchDtoMapper = new MatchDtoMapper();
     private final SessionFactoryUtil sessionFactoryUtil = new SessionFactoryUtil();
     private final PlayerDao playerDao = new PlayerDao(sessionFactoryUtil);
 
