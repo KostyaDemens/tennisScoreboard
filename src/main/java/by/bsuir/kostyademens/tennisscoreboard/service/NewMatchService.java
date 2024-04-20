@@ -13,6 +13,7 @@ public class NewMatchService {
     private final SessionFactoryUtil sessionFactoryUtil = new SessionFactoryUtil();
     private final PlayerDao playerDao = new PlayerDao(sessionFactoryUtil);
 
+    private final MatchDtoMapper matchDtoMapper = new MatchDtoMapper();
 
 
 
@@ -26,5 +27,11 @@ public class NewMatchService {
         Player playerTwo = findOrCreatePlayer(playerTwoName);
         return new Match(playerOne, playerTwo);
     }
+
+//    public MatchDto createNewMatch(Player playerOneName, Player playerTwoName) {
+//        Player playerOne = findOrCreatePlayer(playerOneName);
+//        Player playerTwo = findOrCreatePlayer(playerTwoName);
+//        return matchDtoMapper.apply(new Match(playerOne, playerTwo));
+//    }
 
 }

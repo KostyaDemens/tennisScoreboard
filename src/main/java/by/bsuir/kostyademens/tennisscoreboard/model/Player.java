@@ -3,9 +3,11 @@ package by.bsuir.kostyademens.tennisscoreboard.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "players")
 public class Player {
@@ -26,11 +28,4 @@ public class Player {
     }
 
 
-    @Override
-    public String toString() {
-        return "Player{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }

@@ -1,8 +1,9 @@
 package by.bsuir.kostyademens.tennisscoreboard.dto;
 
 public record MatchDto(
-        Long id,
+//        Long id,
         String playerOneName,
         String playerTwoName
 ) {
+
 }

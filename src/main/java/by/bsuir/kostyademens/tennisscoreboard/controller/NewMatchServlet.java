@@ -1,6 +1,7 @@
 package by.bsuir.kostyademens.tennisscoreboard.controller;
 
 
+import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.service.NewMatchService;
@@ -39,9 +40,12 @@ private OnGoingMatchesService onGoingMatchesService;
         Player firstPlayer = new Player(playerOne.toUpperCase());
         Player secondPlayer = new Player(playerTwo.toUpperCase());
 
+        
         Match match = newMatchService.createNewMatch(firstPlayer, secondPlayer);
         UUID uuid = onGoingMatchesService.add(match);
+
         resp.sendRedirect("match-score?uuid=" + uuid);
+
 
     }
 }

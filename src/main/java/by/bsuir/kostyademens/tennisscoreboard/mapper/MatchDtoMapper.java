@@ -10,7 +10,7 @@ public class MatchDtoMapper implements Function<Match, MatchDto> {
     @Override
     public MatchDto apply(Match match) {
         return new MatchDto(
-                match.getId(),
+//                match.getId(),
                 match.getPlayer1().getName(),
                 match.getPlayer2().getName()
         );
