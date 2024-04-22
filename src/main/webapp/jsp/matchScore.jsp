@@ -1,5 +1,6 @@
-
 <%@ page import="by.bsuir.kostyademens.tennisscoreboard.model.Player" %>
+<%@ page import="by.bsuir.kostyademens.tennisscoreboard.model.PlayerScore" %>
+<%@ page import="by.bsuir.kostyademens.tennisscoreboard.model.PlayerScore" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <style>
@@ -11,6 +12,7 @@
     <title>Match score</title>
 </head>
 <body>
+<% PlayerScore playerScore = new PlayerScore(); %>
 <div class="container">
     <table>
         <tr>
@@ -21,21 +23,33 @@
         </tr>
         <tr>
             <td>${playerOneName}</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
+            <td>
+                <%= playerScore.getSets() %>
+            </td>
+            <td>
+                <%= playerScore.getGames() %>
+            </td>
+            <td>
+                <%= playerScore.getPoints() %>
+            </td>
         </tr>
         <tr>
             <td>${playerTwoName}</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
+            <td>7</td>
+            <td>7</td>
+            <td>7</td>
         </tr>
     </table>
-    <div class="ui-button">
-        <button class="first-button">Player 1 wins point!</button>
-        <button class="second-button">Player 2 wins point!</button>
-    </div>
+
+        <div class="ui-button">
+            <button class="first-button">
+                Player 1 wins point!
+            </button>
+            <button class="second-button">
+                Player 2 wins point!
+            </button>
+        </div>
+
 </div>
 </body>
 </html>

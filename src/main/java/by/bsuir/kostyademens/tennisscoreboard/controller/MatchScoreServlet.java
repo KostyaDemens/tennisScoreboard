@@ -25,11 +25,10 @@ public class MatchScoreServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
         Match match = onGoingMatchesService.get(uuid);
-
-        //Атрибуты, который мы хотим получить в matchScore.jsp
         req.setAttribute("playerOneName", match.getPlayer1().getName());
         req.setAttribute("playerTwoName", match.getPlayer2().getName());
         req.getRequestDispatcher("/jsp/matchScore.jsp").forward(req, resp);
+
     }
 
     @Override

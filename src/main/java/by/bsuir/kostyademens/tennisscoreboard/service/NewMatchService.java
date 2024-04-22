@@ -28,10 +28,5 @@ public class NewMatchService {
         return new Match(playerOne, playerTwo);
     }
 
-//    public MatchDto createNewMatch(Player playerOneName, Player playerTwoName) {
-//        Player playerOne = findOrCreatePlayer(playerOneName);
-//        Player playerTwo = findOrCreatePlayer(playerTwoName);
-//        return matchDtoMapper.apply(new Match(playerOne, playerTwo));
-//    }
 
 }

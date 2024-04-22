@@ -1,14 +1,16 @@
 package by.bsuir.kostyademens.tennisscoreboard.model;
 
+import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatusUtil;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "matches")
 public class Match {
 
@@ -18,23 +20,27 @@ public class Match {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "player_1")
+    @JoinColumn(name = "player_1", nullable = false)
     private Player player1;
 
     @ManyToOne
-    @JoinColumn(name = "player_2")
+    @JoinColumn(name = "player_2", nullable = false)
     private Player player2;
 
     @ManyToOne
-    @JoinColumn(name = "winner")
+    @JoinColumn(name = "winner", nullable = false)
     private Player winner;
-
-    public Match() {
-    }
 
     public Match(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
     }
+
+    @Transient //Нужна для того, чтобы исключить поле из процесса отображения в базу данных
+    @Builder.Default
+    private MatchStatusUtil matchStatus = MatchStatusUtil.ONGOING;
+
+    @Transient
+    private int maxMatchSets;
 
 }
