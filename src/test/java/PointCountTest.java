@@ -1,7 +1,8 @@
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.service.MatchScoreCalculationService;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,13 +27,13 @@ public class PointCountTest {
         Player player1 = match.getPlayer1();
 
         matchScoreCalculationService.incrementPoints(player1);
-        Assertions.assertEquals(15, player1.getPlayerScore().getPoints());
+        assertEquals(15, player1.getPlayerScore().getPoints());
 
         matchScoreCalculationService.incrementPoints(player1);
-        Assertions.assertEquals(30, player1.getPlayerScore().getPoints());
+        assertEquals(30, player1.getPlayerScore().getPoints());
 
         matchScoreCalculationService.incrementPoints(player1);
-        Assertions.assertEquals(40, player1.getPlayerScore().getPoints());
+        assertEquals(40, player1.getPlayerScore().getPoints());
 
 
     }
