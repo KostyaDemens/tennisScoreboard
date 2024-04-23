@@ -1,27 +1,19 @@
 package by.bsuir.kostyademens.tennisscoreboard.service;
 
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
+import by.bsuir.kostyademens.tennisscoreboard.model.PlayerScore;
 import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatusUtil;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.util.PlayerNumberUtil;
+import by.bsuir.kostyademens.tennisscoreboard.util.PointNumberUtil;
+
 
 public class MatchScoreCalculationService {
 
 
 
-
     public void incrementPoints(Player player) {
-        int currentPoints = player.getPlayerScore().getPoints();
-        if (currentPoints == 0) {
-            player.getPlayerScore().setPoints(15);
-        } else if (currentPoints == 15) {
-            player.getPlayerScore().setPoints(30);
-        } else if (currentPoints == 30) {
-            player.getPlayerScore().setPoints(40);
-        } else if (currentPoints == 40) {
-            // Проверка преимущества и т.д
-            player.getPlayerScore().setPoints(0);
-        }
+
     }
 
 
