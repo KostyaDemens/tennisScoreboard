@@ -1,21 +1,16 @@
 package by.bsuir.kostyademens.tennisscoreboard;
 
-import by.bsuir.kostyademens.tennisscoreboard.dao.PlayerDao;
-import by.bsuir.kostyademens.tennisscoreboard.util.SessionFactoryUtil;
+import by.bsuir.kostyademens.tennisscoreboard.model.Player;
+import by.bsuir.kostyademens.tennisscoreboard.model.Point;
 
 
 public class TestMain {
     public static void main(String[] args) {
-        SessionFactoryUtil sessionFactoryUtil = new SessionFactoryUtil();
-        sessionFactoryUtil.init();
+//        Point pointNumberUtil = Point.FIFTEEN;
 
-        try {
-            PlayerDao playerDao = new PlayerDao(sessionFactoryUtil);
-            playerDao.findByName("IGOR");
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            sessionFactoryUtil.shotDown();
-        }
+//        System.out.println(pointNumberUtil.getNumericValue() +
+        Player player = new Player();
+        player.getPlayerScore().setPoint(Point.THIRTY);
+        System.out.println(player.getPlayerScore().getPoint());
     }
 }

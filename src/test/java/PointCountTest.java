@@ -1,5 +1,6 @@
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
+import by.bsuir.kostyademens.tennisscoreboard.model.Point;
 import by.bsuir.kostyademens.tennisscoreboard.service.MatchScoreCalculationService;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -24,17 +25,36 @@ public class PointCountTest {
 
     @Test
     public void playerPointsShouldIncrementCorrectly() {
-        Player player1 = match.getPlayer1();
+        Player playerOne = match.getPlayer1();
 
-        matchScoreCalculationService.incrementPoints(player1);
-        assertEquals(15, player1.getPlayerScore().getPoints());
+        matchScoreCalculationService.incrementPoints(playerOne);
+        assertEquals(15, playerOne.getPlayerScore().getPoint().getNumericValue());
 
-        matchScoreCalculationService.incrementPoints(player1);
-        assertEquals(30, player1.getPlayerScore().getPoints());
+        matchScoreCalculationService.incrementPoints(playerOne);
+        assertEquals(30, playerOne.getPlayerScore().getPoint().getNumericValue());
 
-        matchScoreCalculationService.incrementPoints(player1);
-        assertEquals(40, player1.getPlayerScore().getPoints());
+        matchScoreCalculationService.incrementPoints(playerOne);
+        assertEquals(40, playerOne.getPlayerScore().getPoint().getNumericValue());
+    }
 
+    @Test
+    public void advantageRoundShouldWorkCorrectly() {
+        Player playerOne = match.getPlayer1();
+        Player playerTwo = match.getPlayer2();
 
+        playerOne.getPlayerScore().setPoint(Point.FORTY);
+        playerTwo.getPlayerScore().setPoint(Point.FORTY);
+
+        matchScoreCalculationService.incrementPoints(playerOne);
+        assertEquals("AD", playerOne.getPlayerScore().getPoint());
+        assertEquals("40", playerTwo.getPlayerScore().getPoint());
+
+        matchScoreCalculationService.incrementPoints(playerTwo);
+        assertEquals("AD", playerOne.getPlayerScore().getPoint());
+        assertEquals("40", playerTwo.getPlayerScore().getPoint());
+
+        matchScoreCalculationService.incrementPoints(playerTwo);
+        assertEquals("0", playerOne.getPlayerScore().getPoint());
+        assertEquals("0", playerTwo.getPlayerScore().getPoint());
     }
 }

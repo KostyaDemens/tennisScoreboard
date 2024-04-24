@@ -1,19 +1,20 @@
 package by.bsuir.kostyademens.tennisscoreboard.service;
 
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
-import by.bsuir.kostyademens.tennisscoreboard.model.PlayerScore;
 import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatusUtil;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.util.PlayerNumberUtil;
-import by.bsuir.kostyademens.tennisscoreboard.util.PointNumberUtil;
 
 
 public class MatchScoreCalculationService {
 
 
+    public void startAdvantageRound(Player winner, Player loser) {
+
+    }
 
     public void incrementPoints(Player player) {
-
+        player.getPlayerScore().winPoint();
     }
 
 
