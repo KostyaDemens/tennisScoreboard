@@ -1,29 +1,60 @@
 package by.bsuir.kostyademens.tennisscoreboard.service;
 
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
-import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatusUtil;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
-import by.bsuir.kostyademens.tennisscoreboard.util.PlayerNumberUtil;
+import by.bsuir.kostyademens.tennisscoreboard.model.Point;
+import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatusUtil;
+import by.bsuir.kostyademens.tennisscoreboard.util.PlayerStatusUtil;
 
 
 public class MatchScoreCalculationService {
 
+    private final Match match = new Match();
+    private final Player playerOne = new Player();
+    private final Player playerTwo = new Player();
 
-    public void startAdvantageRound(Player winner, Player loser) {
 
+
+
+    public void advantageCountPoint(Player playerOne, Player playerTwo) {
+//        /*
+//        Вызывать при условии: (playerOne.getPlayerScore.ordinal() == 3 && playerTwo.getPlayerScore.ordinal() == 3)
+//         */
+        int firstPlayerPoints = playerOne.getPlayerScore().getPoint().ordinal();
+        int secondPlayerPoints = playerTwo.getPlayerScore().getPoint().ordinal();
+
+        if (firstPlayerPoints != 0 && secondPlayerPoints != 0) {
+            Player winner = (playerOne.getPlayerStatusUtil() == PlayerStatusUtil.POINT_WINNER) ? playerOne : playerTwo;
+            Player loser = (winner == playerOne) ? playerTwo : playerOne;
+
+            winner.getPlayerScore().setPoint(Point.ADVANTAGE);
+            loser.getPlayerScore().setPoint(Point.FORTY);
+            loser.setPlayerStatusUtil(PlayerStatusUtil.POINT_LOSER);
+        } else {
+            resetPlayersPoints(playerOne, playerTwo);
+        }
     }
+
 
     public void incrementPoints(Player player) {
-        player.getPlayerScore().winPoint();
+        if (player.getPlayerScore().getPoint() == Point.FORTY) {
+            player.getPlayerScore().winPoint();
+            player.setPlayerStatusUtil(PlayerStatusUtil.POINT_WINNER);
+        } else {
+            player.getPlayerScore().setPoint(Point.LOVE);
+        }
     }
 
 
-    private Player getScoringPlayer(Match match, PlayerNumberUtil playerNumber) {
-        return switch (playerNumber) {
-            case FIRST_PLAYER -> match.getPlayer1();
-            case SECOND_PLAYER -> match.getPlayer2();
-        };
+    public int getPointsDifference(Player playerOne, Player playerTwo) {
+        return Math.abs(playerOne.getPlayerScore().getPoint().ordinal() - playerTwo.getPlayerScore().getPoint().ordinal());
     }
+
+    public void resetPlayersPoints(Player playerOne, Player playerTwo) {
+        playerOne.getPlayerScore().setPoint(Point.LOVE);
+        playerTwo.getPlayerScore().setPoint(Point.LOVE);
+    }
+
 
     private boolean isTieBrake(Match match) {
         return match.getMatchStatus() == MatchStatusUtil.TIE_BRAKE;

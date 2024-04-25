@@ -1,5 +1,6 @@
 package by.bsuir.kostyademens.tennisscoreboard.model;
 
+import by.bsuir.kostyademens.tennisscoreboard.util.PlayerStatusUtil;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,6 +25,9 @@ public class Player {
     @Transient
     @Builder.Default
     private PlayerScore playerScore = new PlayerScore();
+
+    @Transient
+    private PlayerStatusUtil playerStatusUtil;
 
     public Player(String name) {
         this.name = name;

@@ -4,7 +4,6 @@ import by.bsuir.kostyademens.tennisscoreboard.model.Point;
 import by.bsuir.kostyademens.tennisscoreboard.service.MatchScoreCalculationService;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,23 +37,31 @@ public class PointCountTest {
     }
 
     @Test
-    public void advantageRoundShouldWorkCorrectly() {
+    public void advantageCountPointShouldWorkCorrectly() {
         Player playerOne = match.getPlayer1();
         Player playerTwo = match.getPlayer2();
 
         playerOne.getPlayerScore().setPoint(Point.FORTY);
         playerTwo.getPlayerScore().setPoint(Point.FORTY);
 
+        matchScoreCalculationService.incrementPoints(playerTwo);
+        matchScoreCalculationService.advantageCountPoint(playerOne,playerTwo);
+
+        assertEquals("40", playerOne.getPlayerScore().getPoint().toString());
+        assertEquals("AD", playerTwo.getPlayerScore().getPoint().toString());
+
         matchScoreCalculationService.incrementPoints(playerOne);
-        assertEquals("AD", playerOne.getPlayerScore().getPoint());
-        assertEquals("40", playerTwo.getPlayerScore().getPoint());
+        matchScoreCalculationService.advantageCountPoint(playerOne, playerTwo);
 
-        matchScoreCalculationService.incrementPoints(playerTwo);
-        assertEquals("AD", playerOne.getPlayerScore().getPoint());
-        assertEquals("40", playerTwo.getPlayerScore().getPoint());
+        assertEquals("AD", playerOne.getPlayerScore().getPoint().toString());
+        assertEquals("40", playerTwo.getPlayerScore().getPoint().toString());
 
-        matchScoreCalculationService.incrementPoints(playerTwo);
-        assertEquals("0", playerOne.getPlayerScore().getPoint());
-        assertEquals("0", playerTwo.getPlayerScore().getPoint());
+        matchScoreCalculationService.incrementPoints(playerOne);
+        matchScoreCalculationService.advantageCountPoint(playerOne, playerTwo);
+
+        assertEquals("0", playerOne.getPlayerScore().getPoint().toString());
+        assertEquals("0", playerTwo.getPlayerScore().getPoint().toString());
     }
+
+
 }
