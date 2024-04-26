@@ -1,6 +1,7 @@
 package by.bsuir.kostyademens.tennisscoreboard.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Getter
@@ -18,5 +19,9 @@ public class PlayerScore {
             case THIRTY -> point = Point.FORTY;
             case FORTY -> point = Point.ADVANTAGE;
         }
+    }
+
+    public void winSet() {
+        this.sets++;
     }
 }

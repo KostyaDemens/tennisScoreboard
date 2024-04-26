@@ -9,17 +9,14 @@ import by.bsuir.kostyademens.tennisscoreboard.util.PlayerStatusUtil;
 
 public class MatchScoreCalculationService {
 
-    private final Match match = new Match();
-    private final Player playerOne = new Player();
-    private final Player playerTwo = new Player();
 
 
 
 
+    /*
+    Such method is applicable when the number of points between two player is 40
+     */
     public void advantageCountPoint(Player playerOne, Player playerTwo) {
-//        /*
-//        Вызывать при условии: (playerOne.getPlayerScore.ordinal() == 3 && playerTwo.getPlayerScore.ordinal() == 3)
-//         */
         int firstPlayerPoints = playerOne.getPlayerScore().getPoint().ordinal();
         int secondPlayerPoints = playerTwo.getPlayerScore().getPoint().ordinal();
 
@@ -36,13 +33,22 @@ public class MatchScoreCalculationService {
     }
 
 
-    public void incrementPoints(Player player) {
+    public void calculatePoints(Player player) {
         if (player.getPlayerScore().getPoint() == Point.FORTY) {
             player.getPlayerScore().winPoint();
             player.setPlayerStatusUtil(PlayerStatusUtil.POINT_WINNER);
         } else {
+            incrementSets(player);
+            /*
+            TODO вместо отдельного места возможно стоило сделать как выше (player.getPlayerScore.winSet)
+                Или наоборот - отдельный метод incrementPoints как ниже
+             */
             player.getPlayerScore().setPoint(Point.LOVE);
         }
+    }
+
+    public void incrementSets(Player player) {
+        player.getPlayerScore().winSet();
     }
 
 

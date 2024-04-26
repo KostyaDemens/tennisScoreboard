@@ -26,13 +26,13 @@ public class PointCountTest {
     public void playerPointsShouldIncrementCorrectly() {
         Player playerOne = match.getPlayer1();
 
-        matchScoreCalculationService.incrementPoints(playerOne);
+        matchScoreCalculationService.calculatePoints(playerOne);
         assertEquals(15, playerOne.getPlayerScore().getPoint().getNumericValue());
 
-        matchScoreCalculationService.incrementPoints(playerOne);
+        matchScoreCalculationService.calculatePoints(playerOne);
         assertEquals(30, playerOne.getPlayerScore().getPoint().getNumericValue());
 
-        matchScoreCalculationService.incrementPoints(playerOne);
+        matchScoreCalculationService.calculatePoints(playerOne);
         assertEquals(40, playerOne.getPlayerScore().getPoint().getNumericValue());
     }
 
@@ -44,19 +44,19 @@ public class PointCountTest {
         playerOne.getPlayerScore().setPoint(Point.FORTY);
         playerTwo.getPlayerScore().setPoint(Point.FORTY);
 
-        matchScoreCalculationService.incrementPoints(playerTwo);
+        matchScoreCalculationService.calculatePoints(playerTwo);
         matchScoreCalculationService.advantageCountPoint(playerOne,playerTwo);
 
         assertEquals("40", playerOne.getPlayerScore().getPoint().toString());
         assertEquals("AD", playerTwo.getPlayerScore().getPoint().toString());
 
-        matchScoreCalculationService.incrementPoints(playerOne);
+        matchScoreCalculationService.calculatePoints(playerOne);
         matchScoreCalculationService.advantageCountPoint(playerOne, playerTwo);
 
         assertEquals("AD", playerOne.getPlayerScore().getPoint().toString());
         assertEquals("40", playerTwo.getPlayerScore().getPoint().toString());
 
-        matchScoreCalculationService.incrementPoints(playerOne);
+        matchScoreCalculationService.calculatePoints(playerOne);
         matchScoreCalculationService.advantageCountPoint(playerOne, playerTwo);
 
         assertEquals("0", playerOne.getPlayerScore().getPoint().toString());
