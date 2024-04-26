@@ -24,13 +24,13 @@
         <tr>
             <td>${playerOneName}</td>
             <td>
-                <%= playerScore.getSets() %>
+                <%= playerScore.getSet() %>
             </td>
             <td>
-                <%= playerScore.getGames() %>
+                <%= playerScore.getGame() %>
             </td>
             <td>
-                <%= playerScore.getPoints() %>
+                <%= playerScore.getPoint() %>
             </td>
         </tr>
         <tr>

@@ -1,14 +1,12 @@
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
-import by.bsuir.kostyademens.tennisscoreboard.model.Point;
+import by.bsuir.kostyademens.tennisscoreboard.service.MatchScoreCalculationService;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import by.bsuir.kostyademens.tennisscoreboard.service.MatchScoreCalculationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class SetCountTest {
-
+public class TieBreakTest {
     private final MatchScoreCalculationService matchScoreCalculationService = new MatchScoreCalculationService();
     private Match match;
 
@@ -24,14 +22,15 @@ public class SetCountTest {
     }
 
     @Test
-    public void matchSetsShouldIncrementCorrectly() {
+    public void tieBreakStatusShouldBeActivatedAndCountPointsCorrectly() {
         Player playerOne = match.getPlayer1();
+        Player playerTwo = match.getPlayer2();
 
-        playerOne.getPlayerScore().setPoint(Point.ADVANTAGE);
-        matchScoreCalculationService.calculatePoints(playerOne);
+        playerOne.getPlayerScore().setGame(6);
+        playerTwo.getPlayerScore().setGame(6);
 
-        assertEquals(1, playerOne.getPlayerScore().getSets());
-
-
+        matchScoreCalculationService.computeTieBreakPoints(match, playerOne);
+        assertEquals(1, playerOne.getPlayerScore().getTieBreakPoint());
     }
+
 }

@@ -1,6 +1,6 @@
 package by.bsuir.kostyademens.tennisscoreboard.model;
 
-import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatusUtil;
+import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,7 +38,7 @@ public class Match {
 
     @Transient //Нужна для того, чтобы исключить поле из процесса отображения в базу данных
     @Builder.Default
-    private MatchStatusUtil matchStatus = MatchStatusUtil.ONGOING;
+    private MatchStatus matchStatus = MatchStatus.ONGOING;
 
     @Transient
     private int maxMatchSets;
