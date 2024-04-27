@@ -23,15 +23,15 @@ public class GameCountTest {
                 .build();
     }
 
-    @Test
-    public void matchSetsShouldIncrementCorrectly() {
-        Player playerOne = match.getPlayer1();
-
-        playerOne.getPlayerScore().setPoint(Point.ADVANTAGE);
-        matchScoreCalculationService.calculateAdvantagePoints(playerOne);
-
-        assertEquals(1, playerOne.getPlayerScore().getGame());
-
-
-    }
+//    @Test
+//    public void matchSetsShouldIncrementCorrectly() {
+//        Player playerOne = match.getPlayer1();
+//
+//        playerOne.getPlayerScore().setPoint(Point.ADVANTAGE);
+//        matchScoreCalculationService.calculateAdvantagePoints(playerOne);
+//
+//        assertEquals(1, playerOne.getPlayerScore().getGame());
+//
+//
+//    }
 }

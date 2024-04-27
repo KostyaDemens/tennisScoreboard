@@ -1,124 +1,106 @@
 package by.bsuir.kostyademens.tennisscoreboard.service;
 
+
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.model.Point;
 import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatus;
 import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatusUtil;
+import by.bsuir.kostyademens.tennisscoreboard.util.PlayerNumber;
 import by.bsuir.kostyademens.tennisscoreboard.util.PlayerStatusUtil;
-
 
 public class MatchScoreCalculationService {
 
-    /*
-    Such method is used to make all calculations in the match
-     */
-
-    public void countPoints(Match match, Player player) {
+    public void makeCalculations(Match match, PlayerNumber player) {
         if (MatchStatusUtil.isMatchFinished(match)) {
             return;
         }
 
-        if (MatchStatusUtil.isTieBreak(match)) {
-            computeTieBreakPoints(match, player);
+        Player scoringPlayer = getScoringPlayer(match, player);
+        Player otherPlayer = getScoringPlayer(match, player);
+        if (MatchStatusUtil.isAdvantage(match)) {
+            countPointIfAdvantage(match, scoringPlayer, otherPlayer);
             return;
         }
-
-        incrementPoints(player);
-        if (isGameFinished(match, player)) {
-            resetPlayersPoints(match);
-            incrementGames(player);
-        }
-
-
+        incrementPoint(scoringPlayer);
     }
 
 
-    /*
-    Such method is applicable when the number of games between to players is 6
-     */
-    public void computeTieBreakPoints(Match match, Player player) {
-        incrementTieBreakPoints(player);
-        if (isTieBrakeFinished(match, player)) {
-            resetPlayersGames(match);
-            incrementSets(player);
-        }
-    }
-
-
-    /*
-    Such method is applicable when the number of points between two players is 40
-     */
-    public void computeAdvantagePoints(Match match, Player playerOne, Player playerTwo) {
-        int firstPlayerPoints = playerOne.getPlayerScore().getPoint().ordinal();
-        int secondPlayerPoints = playerTwo.getPlayerScore().getPoint().ordinal();
-
-        if (firstPlayerPoints != 0 && secondPlayerPoints != 0) {
-            Player winner = (playerOne.getPlayerStatusUtil() == PlayerStatusUtil.POINT_WINNER) ? playerOne : playerTwo;
-            Player loser = (winner == playerOne) ? playerTwo : playerOne;
-
-            winner.getPlayerScore().setPoint(Point.ADVANTAGE);
-            loser.getPlayerScore().setPoint(Point.FORTY);
-            loser.setPlayerStatusUtil(PlayerStatusUtil.POINT_LOSER);
+    public void countPointIfAdvantage(Match match, Player scoringPlayer, Player otherPlayer) {
+        incrementAdvantagePoint(scoringPlayer);
+        if (scoringPlayer.getPlayerStatus() == PlayerStatusUtil.POINT_WINNER) {
+            otherPlayer.getPlayerScore().setPoint(Point.FORTY);
         } else {
-            resetPlayersPoints(match);
+            otherPlayer.getPlayerScore().setPoint(Point.FORTY);
         }
-    }
-
-
-    public void calculateAdvantagePoints(Player player) {
-        if (player.getPlayerScore().getPoint() == Point.FORTY) {
-            player.getPlayerScore().setPoint(Point.ADVANTAGE);
-            player.setPlayerStatusUtil(PlayerStatusUtil.POINT_WINNER);
-        } else {
-            incrementGames(player);
-            player.getPlayerScore().setPoint(Point.LOVE);
+        if (isAdvantageCompleted(match, scoringPlayer)) {
+            resetPoints(match);
+            match.setMatchStatus(MatchStatus.ONGOING);
+            incrementGame(scoringPlayer);
         }
+        scoringPlayer.setPlayerStatus(PlayerStatusUtil.POINT_LOSER);
     }
 
-    public void incrementGames(Player player) {
-        player.getPlayerScore().winGames();
+    private boolean isGameCompleted(Match match, Player scoringPlayer) {
+        return scoringPlayer.getPlayerScore().getPoint().ordinal() >= 4 && getPointsDifference(match) >= 2;
     }
 
-    public void incrementPoints(Player player) {
-        if (player.getPlayerScore().getPoint() == Point.FORTY) {
-            player.getPlayerScore().setPoint(Point.LOVE);
-            incrementGames(player);
-        } else {
-            player.getPlayerScore().winPoint();
-        }
+    private boolean isTieBreakCompleted(Match match, Player scoringPlayer) {
+        return scoringPlayer.getPlayerScore().getTieBreakPoint() >= 7 && getPointsDifference(match) >= 2;
     }
 
-    public void incrementTieBreakPoints(Player player) {
-        player.getPlayerScore().winTieBreakPoint();
+    private boolean isAdvantageCompleted(Match match, Player scoringPlayer) {
+        return scoringPlayer.getPlayerScore().getPoint() == Point.LOVE;
     }
 
-
-    public void incrementSets(Player player) {
-        player.getPlayerScore().winSet();
+    private int getPointsDifference(Match match) {
+        return Math.abs(match.getPlayer2().getPlayerScore().getPoint().getNumericValue() - match.getPlayer1().getPlayerScore().getPoint().getNumericValue());
     }
 
-
-    public int getTieBreakPointsDifference(Match match) {
-        return Math.abs(match.getPlayer1().getPlayerScore().getTieBreakPoint() - match.getPlayer2().getPlayerScore().getTieBreakPoint());
+    private int getGamesDifference(Match match) {
+        return Math.abs(match.getPlayer2().getPlayerScore().getGame() - match.getPlayer1().getPlayerScore().getGame());
     }
 
-    public void resetPlayersPoints(Match match) {
+    private void resetPoints(Match match) {
         match.getPlayer1().getPlayerScore().setPoint(Point.LOVE);
         match.getPlayer2().getPlayerScore().setPoint(Point.LOVE);
     }
 
-    public void resetPlayersGames(Match match) {
+    private void resetGames(Match match) {
         match.getPlayer1().getPlayerScore().setGame(0);
         match.getPlayer2().getPlayerScore().setGame(0);
     }
 
-
-    private boolean isTieBrakeFinished(Match match, Player player) {
-        return player.getPlayerScore().getTieBreakPoint() >= 7 && getTieBreakPointsDifference(match) >= 2;
+    private void incrementSet(Player scoringPlayer) {
+        scoringPlayer.getPlayerScore().winSet();
     }
 
-    private boolean isGameFinished(Match match, Player player) {
-        return player.getPlayerScore().getTieBreakPoint() >= 4 && getTieBreakPointsDifference(match) >= 2;
+    private void incrementGame(Player scoringPlayer) {
+        scoringPlayer.getPlayerScore().winGame();
     }
+
+    public void incrementPoint(Player scoringPlayer) {
+        if (scoringPlayer.getPlayerScore().getPoint() == Point.FORTY) {
+            scoringPlayer.getPlayerScore().setPoint(Point.LOVE);
+        } else {
+            scoringPlayer.getPlayerScore().winPoint();
+        }
+    }
+
+    public void incrementAdvantagePoint(Player scoringPlayer) {
+        if (scoringPlayer.getPlayerScore().getPoint() == Point.FORTY) {
+            scoringPlayer.getPlayerScore().setPoint(Point.ADVANTAGE);
+            scoringPlayer.setPlayerStatus(PlayerStatusUtil.POINT_WINNER);
+        } else {
+            scoringPlayer.getPlayerScore().setPoint(Point.LOVE);
+        }
+    }
+
+    private Player getScoringPlayer(Match match, PlayerNumber playerNum) {
+        return switch (playerNum) {
+            case FIRST_PLAYER -> match.getPlayer1();
+            case SECOND_PLAYER -> match.getPlayer2();
+        };
+    }
+
 }

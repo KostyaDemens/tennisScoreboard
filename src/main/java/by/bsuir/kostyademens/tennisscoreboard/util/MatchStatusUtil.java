@@ -12,4 +12,8 @@ public class MatchStatusUtil {
         return match.getMatchStatus() == MatchStatus.TIE_BREAK;
     }
 
+    public static boolean isAdvantage(Match match) {
+        return match.getMatchStatus() == MatchStatus.ADVANTAGE;
+    }
+
 }

@@ -21,7 +21,7 @@ public class PlayerScore {
         }
     }
 
-    public void winGames() {
+    public void winGame() {
         this.game++;
     }
 
