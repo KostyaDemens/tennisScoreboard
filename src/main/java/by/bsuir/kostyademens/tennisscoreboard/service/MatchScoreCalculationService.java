@@ -23,8 +23,27 @@ public class MatchScoreCalculationService {
             return;
         }
         incrementPoint(scoringPlayer);
+
+        if (MatchStatusUtil.isTieBreak(match)) {
+            countPointIfTieBreak(match, scoringPlayer);
+        }
     }
 
+
+
+    public void countPointIfTieBreak(Match match, Player scoringPlayer) {
+        incrementTieBreakPoint(scoringPlayer);
+        if (isTieBreakCompleted(match, scoringPlayer)) {
+            resetPoints(match);
+            resetGames(match);
+            incrementSet(scoringPlayer);
+            if (isMatchCompleted(scoringPlayer)) {
+                match.setMatchStatus(MatchStatus.FINISHED);
+            } else {
+                match.setMatchStatus(MatchStatus.ONGOING);
+            }
+        }
+    }
 
     public void countPointIfAdvantage(Match match, Player scoringPlayer, Player otherPlayer) {
         incrementAdvantagePoint(scoringPlayer);
@@ -33,7 +52,7 @@ public class MatchScoreCalculationService {
         } else {
             otherPlayer.getPlayerScore().setPoint(Point.FORTY);
         }
-        if (isAdvantageCompleted(match, scoringPlayer)) {
+        if (isAdvantageCompleted(scoringPlayer)) {
             resetPoints(match);
             match.setMatchStatus(MatchStatus.ONGOING);
             incrementGame(scoringPlayer);
@@ -41,24 +60,20 @@ public class MatchScoreCalculationService {
         scoringPlayer.setPlayerStatus(PlayerStatusUtil.POINT_LOSER);
     }
 
-    private boolean isGameCompleted(Match match, Player scoringPlayer) {
-        return scoringPlayer.getPlayerScore().getPoint().ordinal() >= 4 && getPointsDifference(match) >= 2;
+    private boolean isMatchCompleted(Player scoringPlayer) {
+        return scoringPlayer.getPlayerScore().getSet() ==2;
     }
 
     private boolean isTieBreakCompleted(Match match, Player scoringPlayer) {
         return scoringPlayer.getPlayerScore().getTieBreakPoint() >= 7 && getPointsDifference(match) >= 2;
     }
 
-    private boolean isAdvantageCompleted(Match match, Player scoringPlayer) {
+    private boolean isAdvantageCompleted(Player scoringPlayer) {
         return scoringPlayer.getPlayerScore().getPoint() == Point.LOVE;
     }
 
     private int getPointsDifference(Match match) {
         return Math.abs(match.getPlayer2().getPlayerScore().getPoint().getNumericValue() - match.getPlayer1().getPlayerScore().getPoint().getNumericValue());
-    }
-
-    private int getGamesDifference(Match match) {
-        return Math.abs(match.getPlayer2().getPlayerScore().getGame() - match.getPlayer1().getPlayerScore().getGame());
     }
 
     private void resetPoints(Match match) {
@@ -82,9 +97,14 @@ public class MatchScoreCalculationService {
     public void incrementPoint(Player scoringPlayer) {
         if (scoringPlayer.getPlayerScore().getPoint() == Point.FORTY) {
             scoringPlayer.getPlayerScore().setPoint(Point.LOVE);
+            incrementGame(scoringPlayer);
         } else {
             scoringPlayer.getPlayerScore().winPoint();
         }
+    }
+
+    public void incrementTieBreakPoint(Player scoringPlayer) {
+        scoringPlayer.getPlayerScore().winTieBreakPoint();
     }
 
     public void incrementAdvantagePoint(Player scoringPlayer) {

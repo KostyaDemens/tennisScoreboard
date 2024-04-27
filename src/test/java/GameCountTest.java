@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 public class GameCountTest {
 
-    private final MatchScoreCalculationService matchScoreCalculationService = new MatchScoreCalculationService();
+    private final MatchScoreCalculationService service = new MatchScoreCalculationService();
     private Match match;
 
     @BeforeEach
@@ -23,15 +23,21 @@ public class GameCountTest {
                 .build();
     }
 
-//    @Test
-//    public void matchSetsShouldIncrementCorrectly() {
-//        Player playerOne = match.getPlayer1();
-//
-//        playerOne.getPlayerScore().setPoint(Point.ADVANTAGE);
-//        matchScoreCalculationService.calculateAdvantagePoints(playerOne);
-//
-//        assertEquals(1, playerOne.getPlayerScore().getGame());
-//
-//
-//    }
+    @Test
+    public void matchSetsShouldIncrementCorrectly() {
+        Player playerOne = match.getPlayer1();
+
+        playerOne.getPlayerScore().setPoint(Point.THIRTY);
+
+        service.incrementPoint(playerOne);
+        assertEquals(0, playerOne.getPlayerScore().getGame());
+
+        service.incrementPoint(playerOne);
+        assertEquals(1, playerOne.getPlayerScore().getGame());
+
+
+
+
+
+    }
 }
