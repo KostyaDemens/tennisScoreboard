@@ -22,7 +22,7 @@
             <td>${playerOne.name}</td>
             <td>${playerOne.playerScore.set}</td>
             <td>${playerOne.playerScore.game}</td>
-            <td>${playerOne.playerScore.point}</td>
+            <td>${playerOne.playerScore.point.numericValue}</td>
         </tr>
         <tr>
             <td>${playerTwo.name}</td>
@@ -33,13 +33,13 @@
     </table>
 
     <div class="ui-button">
-        <form method="post" action="/match-score?uuid=${match.uuid}">
-            <button class="first-button">
+        <form method="post">
+            <button class="first-button" name="player_id" type="submit" value="1">
                 Player 1 wins point!
             </button>
         </form>
-        <form method="post" action="/match-score?uuid=${match.uuid}">
-            <button class="second-button">
+        <form method="post">
+            <button class="second-button" name="player_id" type="submit" value="2">
                 Player 2 wins point!
             </button>
         </form>

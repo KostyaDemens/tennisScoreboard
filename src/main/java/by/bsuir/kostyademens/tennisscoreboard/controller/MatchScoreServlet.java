@@ -4,6 +4,7 @@ import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.service.MatchScoreCalculationService;
 import by.bsuir.kostyademens.tennisscoreboard.service.OnGoingMatchesService;
+import by.bsuir.kostyademens.tennisscoreboard.util.PlayerNumber;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,6 +20,9 @@ public class MatchScoreServlet extends HttpServlet {
     private OnGoingMatchesService onGoingMatchesService;
     private MatchScoreCalculationService calculationService;
 
+    private static final String PLAYER_ID = "1";
+
+
     @Override
     public void init(ServletConfig config) {
         onGoingMatchesService = (OnGoingMatchesService) config.getServletContext().getAttribute("onGoingMatchesService");
@@ -31,14 +35,26 @@ public class MatchScoreServlet extends HttpServlet {
         Match match = onGoingMatchesService.get(uuid);
         req.setAttribute("playerOne", match.getPlayer1());
         req.setAttribute("playerTwo", match.getPlayer2());
-        System.out.println(match.getPlayer1().getPlayerScore().getGame());
         req.getRequestDispatcher("/jsp/matchScore.jsp").forward(req, resp);
 
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        UUID matchUUID = UUID.fromString(req.getParameter("uuid"));
+        UUID uuid = UUID.fromString(req.getParameter("uuid"));
+        String player_id = req.getParameter("player_id");
 
+        Match match = onGoingMatchesService.get(uuid);
+        PlayerNumber playerNumber = getPlayerNumber(player_id);
+
+        calculationService.makeCalculations(match, playerNumber);
+
+        resp.sendRedirect("/match-score?uuid=" + uuid);
+    }
+
+    private PlayerNumber getPlayerNumber(String player_id) {
+        return player_id.equals(PLAYER_ID)?
+                PlayerNumber.FIRST_PLAYER:
+                PlayerNumber.SECOND_PLAYER;
     }
 }

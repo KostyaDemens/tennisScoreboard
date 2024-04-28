@@ -17,11 +17,7 @@ public class MatchScoreCalculationService {
         }
 
         Player scoringPlayer = getScoringPlayer(match, player);
-        Player otherPlayer = getScoringPlayer(match, player);
-        if (MatchStatusUtil.isAdvantage(match)) {
-            countPointIfAdvantage(match, scoringPlayer, otherPlayer);
-            return;
-        }
+        
         incrementPoint(scoringPlayer);
 
         if (MatchStatusUtil.isTieBreak(match)) {
