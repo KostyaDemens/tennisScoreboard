@@ -13,8 +13,6 @@ public class NewMatchService {
     private final SessionFactoryUtil sessionFactoryUtil = new SessionFactoryUtil();
     private final PlayerDao playerDao = new PlayerDao(sessionFactoryUtil);
 
-    private final MatchDtoMapper matchDtoMapper = new MatchDtoMapper();
-
 
 
     public Player findOrCreatePlayer(Player player) {

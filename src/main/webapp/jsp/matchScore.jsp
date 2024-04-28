@@ -1,6 +1,4 @@
-<%@ page import="by.bsuir.kostyademens.tennisscoreboard.model.Player" %>
-<%@ page import="by.bsuir.kostyademens.tennisscoreboard.model.PlayerScore" %>
-<%@ page import="by.bsuir.kostyademens.tennisscoreboard.model.PlayerScore" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <style>
@@ -12,7 +10,6 @@
     <title>Match score</title>
 </head>
 <body>
-<% PlayerScore playerScore = new PlayerScore(); %>
 <div class="container">
     <table>
         <tr>
@@ -22,33 +19,31 @@
             <td><strong>POINTS</strong></td>
         </tr>
         <tr>
-            <td>${playerOneName}</td>
-            <td>
-                <%= playerScore.getSet() %>
-            </td>
-            <td>
-                <%= playerScore.getGame() %>
-            </td>
-            <td>
-                <%= playerScore.getPoint() %>
-            </td>
+            <td>${playerOne.name}</td>
+            <td>${playerOne.playerScore.set}</td>
+            <td>${playerOne.playerScore.game}</td>
+            <td>${playerOne.playerScore.point}</td>
         </tr>
         <tr>
-            <td>${playerTwoName}</td>
-            <td>7</td>
-            <td>7</td>
-            <td>7</td>
+            <td>${playerTwo.name}</td>
+            <td>${playerTwo.playerScore.set}</td>
+            <td>${playerTwo.playerScore.game}</td>
+            <td>${playerTwo.playerScore.point.numericValue}</td>
         </tr>
     </table>
 
-        <div class="ui-button">
+    <div class="ui-button">
+        <form method="post" action="/match-score?uuid=${match.uuid}">
             <button class="first-button">
                 Player 1 wins point!
             </button>
+        </form>
+        <form method="post" action="/match-score?uuid=${match.uuid}">
             <button class="second-button">
                 Player 2 wins point!
             </button>
-        </div>
+        </form>
+    </div>
 
 </div>
 </body>

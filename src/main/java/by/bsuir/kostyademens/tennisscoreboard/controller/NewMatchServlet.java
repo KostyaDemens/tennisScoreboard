@@ -34,16 +34,19 @@ private OnGoingMatchesService onGoingMatchesService;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        // Эти параметры мы получаем из newMatch.jsp страницы, используем их для создания объекта Player
         String playerOne = req.getParameter("player-1");
         String playerTwo = req.getParameter("player-2");
 
         Player firstPlayer = new Player(playerOne.toUpperCase());
         Player secondPlayer = new Player(playerTwo.toUpperCase());
 
-        
+        // Генерируем UUID и кладём матч в коллекцию матчей
         Match match = newMatchService.createNewMatch(firstPlayer, secondPlayer);
         UUID uuid = onGoingMatchesService.add(match);
 
+        // Редирект на страницу /match-score?uuid=uuid
         resp.sendRedirect("match-score?uuid=" + uuid);
 
 

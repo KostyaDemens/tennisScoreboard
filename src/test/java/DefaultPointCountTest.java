@@ -21,6 +21,7 @@ public class DefaultPointCountTest {
                 .build();
     }
 
+
     @Test
     public void playerPointsShouldIncrementCorrectly() {
         Player playerOne = match.getPlayer1();
