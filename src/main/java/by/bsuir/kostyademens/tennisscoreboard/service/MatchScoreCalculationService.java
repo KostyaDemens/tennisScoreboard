@@ -19,6 +19,9 @@ public class MatchScoreCalculationService {
         Player scoringPlayer = getScoringPlayer(match, player);
         
         incrementPoint(scoringPlayer);
+        if (scoringPlayer.getPlayerScore().getPoint() == Point.LOVE) {
+            resetPoints(match);
+        }
 
         if (MatchStatusUtil.isTieBreak(match)) {
             countPointIfTieBreak(match, scoringPlayer);
@@ -94,6 +97,7 @@ public class MatchScoreCalculationService {
         if (scoringPlayer.getPlayerScore().getPoint() == Point.FORTY) {
             scoringPlayer.getPlayerScore().setPoint(Point.LOVE);
             incrementGame(scoringPlayer);
+
         } else {
             scoringPlayer.getPlayerScore().winPoint();
         }

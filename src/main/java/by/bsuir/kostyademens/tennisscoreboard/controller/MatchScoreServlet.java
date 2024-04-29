@@ -53,8 +53,6 @@ public class MatchScoreServlet extends HttpServlet {
     }
 
     private PlayerNumber getPlayerNumber(String player_id) {
-        return player_id.equals(PLAYER_ID)?
-                PlayerNumber.FIRST_PLAYER:
-                PlayerNumber.SECOND_PLAYER;
+        return player_id.equals(PLAYER_ID) ? PlayerNumber.FIRST_PLAYER : PlayerNumber.SECOND_PLAYER;
     }
 }
