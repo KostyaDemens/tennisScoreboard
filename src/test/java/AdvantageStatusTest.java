@@ -38,16 +38,24 @@ public class AdvantageStatusTest {
         assertEquals("AD", playerTwo.getPlayerScore().getPoint().toString());
 
         service.countPointIfAdvantage(match, playerOne, playerTwo);
-        assertEquals("AD", playerOne.getPlayerScore().getPoint().toString());
+        assertEquals(40, playerOne.getPlayerScore().getPoint().getNumericValue());
         assertEquals(40, playerTwo.getPlayerScore().getPoint().getNumericValue());
 
         service.countPointIfAdvantage(match, playerTwo, playerOne);
         assertEquals(40, playerOne.getPlayerScore().getPoint().getNumericValue());
         assertEquals("AD", playerTwo.getPlayerScore().getPoint().toString());
 
-        service.countPointIfAdvantage(match, playerTwo, playerOne);
+        service.countPointIfAdvantage(match, playerOne, playerTwo);
+        assertEquals(40, playerOne.getPlayerScore().getPoint().getNumericValue());
+        assertEquals(40, playerTwo.getPlayerScore().getPoint().getNumericValue());
+
+        service.countPointIfAdvantage(match, playerOne, playerTwo);
+        assertEquals("AD", playerOne.getPlayerScore().getPoint().toString());
+        assertEquals(40, playerTwo.getPlayerScore().getPoint().getNumericValue());
+
+        service.countPointIfAdvantage(match, playerOne, playerTwo);
         assertEquals(0, playerOne.getPlayerScore().getPoint().getNumericValue());
-        assertEquals(0, playerTwo.getPlayerScore().getPoint().getNumericValue());
+        assertEquals(0, playerOne.getPlayerScore().getPoint().getNumericValue());
 
     }
 }

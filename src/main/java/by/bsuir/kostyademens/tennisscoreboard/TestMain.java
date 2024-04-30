@@ -7,7 +7,6 @@ import by.bsuir.kostyademens.tennisscoreboard.model.Point;
 
 public class TestMain {
     public static void main(String[] args) {
-        Match match = new Match();
 
     }
 }

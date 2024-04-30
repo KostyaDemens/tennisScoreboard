@@ -19,41 +19,37 @@ public class MatchScoreCalculationService {
         Player losingPlayer = getLosingPlayer(match, player);
 
         checkIsAdvantage(match);
+
         if (MatchStatusUtil.isAdvantage(match)) {
             countPointIfAdvantage(match, scoringPlayer, losingPlayer);
             return;
         }
+
         incrementPoint(scoringPlayer);
+        checkIsTieBreak(match);
+
+        if (MatchStatusUtil.isTieBreak(match)) {
+//            countPointIfTieBreak(match, scoringPlayer);
+        }
 
 
         if (scoringPlayer.getPlayerScore().getPoint() == Point.LOVE) {
             resetPoints(match);
         }
 
-        if (MatchStatusUtil.isTieBreak(match)) {
-            countPointIfTieBreak(match, scoringPlayer);
-        }
-    }
-
-
-    public void countPointIfTieBreak(Match match, Player scoringPlayer) {
-        incrementTieBreakPoint(scoringPlayer);
-        if (isTieBreakCompleted(match, scoringPlayer)) {
-            resetPoints(match);
-            resetGames(match);
-            incrementSet(scoringPlayer);
-            if (isMatchCompleted(scoringPlayer)) {
-                match.setMatchStatus(MatchStatus.FINISHED);
-            } else {
-                match.setMatchStatus(MatchStatus.ONGOING);
-            }
-        }
     }
 
     public void checkIsAdvantage(Match match) {
         if (match.getPlayer1().getPlayerScore().getPoint() == Point.FORTY
                 && match.getPlayer2().getPlayerScore().getPoint() == Point.FORTY) {
             match.setMatchStatus(MatchStatus.ADVANTAGE);
+        }
+    }
+
+    public void checkIsTieBreak(Match match) {
+        if (match.getPlayer1().getPlayerScore().getGame() == 6
+        && match.getPlayer2().getPlayerScore().getGame() == 6) {
+            match.setMatchStatus(MatchStatus.TIE_BREAK);
         }
     }
 
@@ -70,16 +66,12 @@ public class MatchScoreCalculationService {
         return scoringPlayer.getPlayerScore().getSet() == 2;
     }
 
-    private boolean isTieBreakCompleted(Match match, Player scoringPlayer) {
-        return scoringPlayer.getPlayerScore().getTieBreakPoint() >= 7 && getPointsDifference(match) >= 2;
-    }
-
     private boolean isAdvantageCompleted(Player scoringPlayer) {
         return scoringPlayer.getPlayerScore().getPoint() == Point.LOVE;
     }
 
-    private int getPointsDifference(Match match) {
-        return Math.abs(match.getPlayer2().getPlayerScore().getPoint().getNumericValue() - match.getPlayer1().getPlayerScore().getPoint().getNumericValue());
+    private int getPointsDifference(Player scoringPlayer, Player losingPlayer) {
+        return Math.abs(scoringPlayer.getPlayerScore().getPoint().getNumericValue() - losingPlayer.getPlayerScore().getPoint().getNumericValue());
     }
 
     private void resetPoints(Match match) {
@@ -120,12 +112,15 @@ public class MatchScoreCalculationService {
             if (isAdvantageCompleted(scoringPlayer)) {
                 scoringPlayer.getPlayerScore().winGame();
             }
-            return;
+        } else {
+            if (getPointsDifference(scoringPlayer, losingPlayer) == 0) {
+                scoringPlayer.getPlayerScore().setPoint(Point.ADVANTAGE);
+                losingPlayer.getPlayerScore().setPoint(Point.FORTY);
+            } else {
+                scoringPlayer.getPlayerScore().setPoint(Point.FORTY);
+                losingPlayer.getPlayerScore().setPoint(Point.FORTY);
+            }
         }
-        scoringPlayer.getPlayerScore().setPoint(Point.ADVANTAGE);
-
-        losingPlayer.getPlayerScore().setPoint(Point.FORTY);
-
     }
 
     private Player getScoringPlayer(Match match, PlayerNumber playerNum) {
@@ -141,13 +136,5 @@ public class MatchScoreCalculationService {
             case SECOND_PLAYER -> match.getPlayer1();
         };
     }
-
-//    private Player getFirstPlayer(Match match) {
-//        return match.getPlayer1();
-//    }
-//
-//    private Player getSecondPlayer(Match match) {
-//        return match.getPlayer2();
-//    }
 
 }
