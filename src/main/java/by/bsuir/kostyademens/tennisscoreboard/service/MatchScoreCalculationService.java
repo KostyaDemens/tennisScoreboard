@@ -16,14 +16,7 @@ public class MatchScoreCalculationService {
         }
 
         Player scoringPlayer = getScoringPlayer(match, player);
-        Player losingPlayer;
-
-
-        if (player == PlayerNumber.SECOND_PLAYER) {
-            losingPlayer = getFirstPlayer(match);
-        } else {
-            losingPlayer = getSecondPlayer(match);
-        }
+        Player losingPlayer = getLosingPlayer(match, player);
 
         checkIsAdvantage(match);
         if (MatchStatusUtil.isAdvantage(match)) {
@@ -142,12 +135,19 @@ public class MatchScoreCalculationService {
         };
     }
 
-    private Player getFirstPlayer(Match match) {
-        return match.getPlayer1();
+    private Player getLosingPlayer(Match match, PlayerNumber playerNum) {
+        return switch (playerNum) {
+            case FIRST_PLAYER -> match.getPlayer2();
+            case SECOND_PLAYER -> match.getPlayer1();
+        };
     }
 
-    private Player getSecondPlayer(Match match) {
-        return match.getPlayer2();
-    }
+//    private Player getFirstPlayer(Match match) {
+//        return match.getPlayer1();
+//    }
+//
+//    private Player getSecondPlayer(Match match) {
+//        return match.getPlayer2();
+//    }
 
 }
