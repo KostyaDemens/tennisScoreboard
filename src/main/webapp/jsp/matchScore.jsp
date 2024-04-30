@@ -22,13 +22,13 @@
             <td>${playerOne.name}</td>
             <td>${playerOne.playerScore.set}</td>
             <td>${playerOne.playerScore.game}</td>
-            <td>${playerOne.playerScore.point.numericValue}</td>
+            <td>${playerOne.playerScore.point.score}</td>
         </tr>
         <tr>
             <td>${playerTwo.name}</td>
             <td>${playerTwo.playerScore.set}</td>
             <td>${playerTwo.playerScore.game}</td>
-            <td>${playerTwo.playerScore.point.numericValue}</td>
+            <td>${playerTwo.playerScore.point.score}</td>
         </tr>
     </table>
 

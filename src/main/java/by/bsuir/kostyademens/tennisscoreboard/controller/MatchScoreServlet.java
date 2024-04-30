@@ -19,7 +19,6 @@ import java.util.UUID;
 public class MatchScoreServlet extends HttpServlet {
     private OnGoingMatchesService onGoingMatchesService;
     private MatchScoreCalculationService calculationService;
-
     private static final String PLAYER_ID = "1";
 
 
@@ -45,7 +44,12 @@ public class MatchScoreServlet extends HttpServlet {
         String player_id = req.getParameter("player_id");
 
         Match match = onGoingMatchesService.get(uuid);
+
+        Player firstPlayer = match.getPlayer1();
+        Player secondPlayer = match.getPlayer2();
+
         PlayerNumber playerNumber = getPlayerNumber(player_id);
+
 
         calculationService.makeCalculations(match, playerNumber);
 

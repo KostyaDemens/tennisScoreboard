@@ -7,7 +7,6 @@ import by.bsuir.kostyademens.tennisscoreboard.model.Point;
 import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatus;
 import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatusUtil;
 import by.bsuir.kostyademens.tennisscoreboard.util.PlayerNumber;
-import by.bsuir.kostyademens.tennisscoreboard.util.PlayerStatusUtil;
 
 public class MatchScoreCalculationService {
 
@@ -17,8 +16,23 @@ public class MatchScoreCalculationService {
         }
 
         Player scoringPlayer = getScoringPlayer(match, player);
-        
+        Player losingPlayer;
+
+
+        if (player == PlayerNumber.SECOND_PLAYER) {
+            losingPlayer = getFirstPlayer(match);
+        } else {
+            losingPlayer = getSecondPlayer(match);
+        }
+
+        checkIsAdvantage(match);
+        if (MatchStatusUtil.isAdvantage(match)) {
+            countPointIfAdvantage(match, scoringPlayer, losingPlayer);
+            return;
+        }
         incrementPoint(scoringPlayer);
+
+
         if (scoringPlayer.getPlayerScore().getPoint() == Point.LOVE) {
             resetPoints(match);
         }
@@ -27,7 +41,6 @@ public class MatchScoreCalculationService {
             countPointIfTieBreak(match, scoringPlayer);
         }
     }
-
 
 
     public void countPointIfTieBreak(Match match, Player scoringPlayer) {
@@ -44,23 +57,24 @@ public class MatchScoreCalculationService {
         }
     }
 
-    public void countPointIfAdvantage(Match match, Player scoringPlayer, Player otherPlayer) {
-        incrementAdvantagePoint(scoringPlayer);
-        if (scoringPlayer.getPlayerStatus() == PlayerStatusUtil.POINT_WINNER) {
-            otherPlayer.getPlayerScore().setPoint(Point.FORTY);
-        } else {
-            otherPlayer.getPlayerScore().setPoint(Point.FORTY);
+    public void checkIsAdvantage(Match match) {
+        if (match.getPlayer1().getPlayerScore().getPoint() == Point.FORTY
+                && match.getPlayer2().getPlayerScore().getPoint() == Point.FORTY) {
+            match.setMatchStatus(MatchStatus.ADVANTAGE);
         }
-        if (isAdvantageCompleted(scoringPlayer)) {
-            resetPoints(match);
-            match.setMatchStatus(MatchStatus.ONGOING);
-            incrementGame(scoringPlayer);
-        }
-        scoringPlayer.setPlayerStatus(PlayerStatusUtil.POINT_LOSER);
     }
 
+    public void countPointIfAdvantage(Match match, Player scoringPlayer, Player losingPlayer) {
+        incrementAdvantagePoint(scoringPlayer, losingPlayer);
+        if (isAdvantageCompleted(scoringPlayer)) {
+            match.setMatchStatus(MatchStatus.ONGOING);
+            resetPoints(match);
+        }
+    }
+
+
     private boolean isMatchCompleted(Player scoringPlayer) {
-        return scoringPlayer.getPlayerScore().getSet() ==2;
+        return scoringPlayer.getPlayerScore().getSet() == 2;
     }
 
     private boolean isTieBreakCompleted(Match match, Player scoringPlayer) {
@@ -107,13 +121,18 @@ public class MatchScoreCalculationService {
         scoringPlayer.getPlayerScore().winTieBreakPoint();
     }
 
-    public void incrementAdvantagePoint(Player scoringPlayer) {
-        if (scoringPlayer.getPlayerScore().getPoint() == Point.FORTY) {
-            scoringPlayer.getPlayerScore().setPoint(Point.ADVANTAGE);
-            scoringPlayer.setPlayerStatus(PlayerStatusUtil.POINT_WINNER);
-        } else {
+    public void incrementAdvantagePoint(Player scoringPlayer, Player losingPlayer) {
+        if (scoringPlayer.getPlayerScore().getPoint() == Point.ADVANTAGE) {
             scoringPlayer.getPlayerScore().setPoint(Point.LOVE);
+            if (isAdvantageCompleted(scoringPlayer)) {
+                scoringPlayer.getPlayerScore().winGame();
+            }
+            return;
         }
+        scoringPlayer.getPlayerScore().setPoint(Point.ADVANTAGE);
+
+        losingPlayer.getPlayerScore().setPoint(Point.FORTY);
+
     }
 
     private Player getScoringPlayer(Match match, PlayerNumber playerNum) {
@@ -121,6 +140,14 @@ public class MatchScoreCalculationService {
             case FIRST_PLAYER -> match.getPlayer1();
             case SECOND_PLAYER -> match.getPlayer2();
         };
+    }
+
+    private Player getFirstPlayer(Match match) {
+        return match.getPlayer1();
+    }
+
+    private Player getSecondPlayer(Match match) {
+        return match.getPlayer2();
     }
 
 }

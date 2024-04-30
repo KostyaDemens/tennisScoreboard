@@ -3,6 +3,7 @@ package by.bsuir.kostyademens.tennisscoreboard.model;
 
 import lombok.Getter;
 
+@Getter
 public enum Point {
     LOVE("0", 0), FIFTEEN("15", 15),
     THIRTY("30", 30), FORTY("40", 40),
@@ -10,7 +11,6 @@ public enum Point {
 
     private final String score;
 
-    @Getter
     private final int numericValue;
 
     Point(String score, int numericValue) {

@@ -23,7 +23,6 @@ public class PlayerDao {
                     .setParameter("name", name)
                     .getSingleResult();
             session.getTransaction().commit();
-            System.out.println(player.getId());
             return Optional.of(player);
         } catch (NoResultException e) {
             return Optional.empty();

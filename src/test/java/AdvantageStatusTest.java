@@ -15,8 +15,8 @@ public class AdvantageStatusTest {
 
     @BeforeEach
     public void setUp() {
-        Player playerOne = new Player();
-        Player playerTwo = new Player();
+        Player playerOne = new Player("Vova");
+        Player playerTwo = new Player("Petya");
         match = Match.builder()
                 .maxMatchSets(2)
                 .player1(playerOne)
@@ -32,6 +32,7 @@ public class AdvantageStatusTest {
         playerOne.getPlayerScore().setPoint(Point.FORTY);
         playerTwo.getPlayerScore().setPoint(Point.FORTY);
 
+
         service.countPointIfAdvantage(match, playerTwo, playerOne);
         assertEquals(40, playerOne.getPlayerScore().getPoint().getNumericValue());
         assertEquals("AD", playerTwo.getPlayerScore().getPoint().toString());
@@ -41,8 +42,8 @@ public class AdvantageStatusTest {
         assertEquals(40, playerTwo.getPlayerScore().getPoint().getNumericValue());
 
         service.countPointIfAdvantage(match, playerTwo, playerOne);
-        assertEquals("AD", playerTwo.getPlayerScore().getPoint().toString());
         assertEquals(40, playerOne.getPlayerScore().getPoint().getNumericValue());
+        assertEquals("AD", playerTwo.getPlayerScore().getPoint().toString());
 
         service.countPointIfAdvantage(match, playerTwo, playerOne);
         assertEquals(0, playerOne.getPlayerScore().getPoint().getNumericValue());
