@@ -28,10 +28,10 @@ public class GameCountTest {
 
         playerOne.getPlayerScore().setPoint(Point.THIRTY);
 
-        service.incrementPoint(playerOne);
+        service.incrementPoint(match, playerOne);
         assertEquals(0, playerOne.getPlayerScore().getGame());
 
-        service.incrementPoint(playerOne);
+        service.incrementPoint(match, playerOne);
         assertEquals(1, playerOne.getPlayerScore().getGame());
 
 

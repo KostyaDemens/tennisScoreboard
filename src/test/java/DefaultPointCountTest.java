@@ -25,19 +25,19 @@ public class DefaultPointCountTest {
     public void playerPointsShouldIncrementCorrectly() {
         Player playerOne = match.getPlayer1();
 
-        service.incrementPoint(playerOne);
+        service.incrementPoint(match, playerOne);
         assertEquals(15, playerOne.getPlayerScore().getPoint().getNumericValue());
 
-        service.incrementPoint(playerOne);
+        service.incrementPoint(match, playerOne);
         assertEquals(30, playerOne.getPlayerScore().getPoint().getNumericValue());
 
-        service.incrementPoint(playerOne);
+        service.incrementPoint(match, playerOne);
         assertEquals(40, playerOne.getPlayerScore().getPoint().getNumericValue());
 
-        service.incrementPoint(playerOne);
+        service.incrementPoint(match, playerOne);
         assertEquals(0, playerOne.getPlayerScore().getPoint().getNumericValue());
 
-        service.incrementPoint(playerOne);
+        service.incrementPoint(match, playerOne);
         assertEquals(15, playerOne.getPlayerScore().getPoint().getNumericValue());
     }
 }

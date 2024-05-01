@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -39,7 +39,16 @@
             <td>${playerTwo.name}</td>
             <td>${playerTwo.playerScore.set}</td>
             <td>${playerTwo.playerScore.game}</td>
-            <td>${playerTwo.playerScore.point.score}</td>
+            <td>
+                <c:choose>
+                    <c:when test="${match.matchStatus eq 'TIE_BREAK'}">
+                        <c:out value="${playerTwo.playerScore.tieBreakPoint}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <c:out value="${playerTwo.playerScore.point.score}"/>
+                    </c:otherwise>
+                </c:choose>
+            </td>
         </tr>
     </table>
 

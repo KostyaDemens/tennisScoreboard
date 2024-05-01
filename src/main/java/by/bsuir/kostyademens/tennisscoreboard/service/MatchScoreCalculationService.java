@@ -19,18 +19,18 @@ public class MatchScoreCalculationService {
         Player losingPlayer = getLosingPlayer(match, player);
 
         checkIsAdvantage(match);
-
         if (MatchStatusUtil.isAdvantage(match)) {
             countPointIfAdvantage(match, scoringPlayer, losingPlayer);
             return;
         }
 
-        incrementPoint(scoringPlayer);
         checkIsTieBreak(match);
-
         if (MatchStatusUtil.isTieBreak(match)) {
-//            countPointIfTieBreak(match, scoringPlayer);
+            countPointIfTieBreak(match, scoringPlayer);
+            return;
         }
+
+        incrementPoint(match, scoringPlayer);
 
 
         if (scoringPlayer.getPlayerScore().getPoint() == Point.LOVE) {
@@ -41,7 +41,17 @@ public class MatchScoreCalculationService {
 
     public void countPointIfTieBreak(Match match, Player scoringPlayer) {
         incrementTieBreakPoint(scoringPlayer);
-        
+        if (isTieBreakCompleted(match)) {
+            scoringPlayer.getPlayerScore().winSet();
+            resetTieBreakPoints(match);
+            resetGames(match);
+            if (isMatchCompleted(scoringPlayer)) {
+                return;
+            } else {
+                match.setMatchStatus(MatchStatus.ONGOING);
+            }
+        }
+
     }
 
     public void checkIsAdvantage(Match match) {
@@ -53,7 +63,7 @@ public class MatchScoreCalculationService {
 
     public void checkIsTieBreak(Match match) {
         if (match.getPlayer1().getPlayerScore().getGame() == 6
-        && match.getPlayer2().getPlayerScore().getGame() == 6) {
+                && match.getPlayer2().getPlayerScore().getGame() == 6) {
             match.setMatchStatus(MatchStatus.TIE_BREAK);
         }
     }
@@ -75,8 +85,23 @@ public class MatchScoreCalculationService {
         return scoringPlayer.getPlayerScore().getPoint() == Point.LOVE;
     }
 
+    private boolean isTieBreakCompleted(Match match) {
+        if (match.getPlayer1().getPlayerScore().getTieBreakPoint() >= 7 || match.getPlayer2().getPlayerScore().getTieBreakPoint() >= 7) {
+            return getTieBreakPointDifference(match) >= 2;
+        }
+        return false;
+    }
+
     private int getPointsDifference(Player scoringPlayer, Player losingPlayer) {
         return Math.abs(scoringPlayer.getPlayerScore().getPoint().getNumericValue() - losingPlayer.getPlayerScore().getPoint().getNumericValue());
+    }
+
+    private int getTieBreakPointDifference(Match match) {
+        return Math.abs(match.getPlayer1().getPlayerScore().getTieBreakPoint() - match.getPlayer2().getPlayerScore().getTieBreakPoint());
+    }
+
+    private int getGameDifference(Match match) {
+        return Math.abs(match.getPlayer1().getPlayerScore().getGame() - match.getPlayer2().getPlayerScore().getGame());
     }
 
     private void resetPoints(Match match) {
@@ -89,27 +114,30 @@ public class MatchScoreCalculationService {
         match.getPlayer2().getPlayerScore().setGame(0);
     }
 
-    private void incrementSet(Player scoringPlayer) {
-        scoringPlayer.getPlayerScore().winSet();
+    private void resetTieBreakPoints(Match match) {
+        match.getPlayer1().getPlayerScore().setTieBreakPoint(0);
+        match.getPlayer2().getPlayerScore().setTieBreakPoint(0);
     }
 
-    private void incrementGame(Player scoringPlayer) {
+    private void incrementGame(Match match, Player scoringPlayer) {
         scoringPlayer.getPlayerScore().winGame();
+        if (scoringPlayer.getPlayerScore().getGame() >= 6 && getGameDifference(match) >= 2) {
+            scoringPlayer.getPlayerScore().winSet();
+            resetGames(match);
+        }
     }
 
-    public void incrementPoint(Player scoringPlayer) {
+    public void incrementPoint(Match match, Player scoringPlayer) {
         if (scoringPlayer.getPlayerScore().getPoint() == Point.FORTY) {
             scoringPlayer.getPlayerScore().setPoint(Point.LOVE);
-            incrementGame(scoringPlayer);
-
+            incrementGame(match, scoringPlayer);
         } else {
             scoringPlayer.getPlayerScore().winPoint();
         }
     }
 
     public void incrementTieBreakPoint(Player scoringPlayer) {
-        int tieBreakPoint = scoringPlayer.getPlayerScore().getPoint().ordinal();
-//        scoringPlayer.getPlayerScore().setPoint();
+        scoringPlayer.getPlayerScore().winTieBreakPoint();
     }
 
     public void incrementAdvantagePoint(Player scoringPlayer, Player losingPlayer) {
