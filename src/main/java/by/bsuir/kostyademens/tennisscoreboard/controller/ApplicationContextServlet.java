@@ -1,5 +1,6 @@
 package by.bsuir.kostyademens.tennisscoreboard.controller;
 
+import by.bsuir.kostyademens.tennisscoreboard.service.FinishedMatchPersistenceService;
 import by.bsuir.kostyademens.tennisscoreboard.service.MatchScoreCalculationService;
 import by.bsuir.kostyademens.tennisscoreboard.service.NewMatchService;
 import by.bsuir.kostyademens.tennisscoreboard.service.OnGoingMatchesService;
@@ -18,5 +19,6 @@ public class ApplicationContextServlet implements ServletContextListener {
         context.setAttribute("newMatchService", new NewMatchService());
         context.setAttribute("onGoingMatchesService", new OnGoingMatchesService());
         context.setAttribute("matchScoreCalculationService", new MatchScoreCalculationService());
+        context.setAttribute("finishedMatchPersistenceService", new FinishedMatchPersistenceService());
     }
 }

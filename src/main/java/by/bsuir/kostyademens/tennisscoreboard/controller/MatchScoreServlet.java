@@ -2,8 +2,10 @@ package by.bsuir.kostyademens.tennisscoreboard.controller;
 
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
+import by.bsuir.kostyademens.tennisscoreboard.service.FinishedMatchPersistenceService;
 import by.bsuir.kostyademens.tennisscoreboard.service.MatchScoreCalculationService;
 import by.bsuir.kostyademens.tennisscoreboard.service.OnGoingMatchesService;
+import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatus;
 import by.bsuir.kostyademens.tennisscoreboard.util.PlayerNumber;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class MatchScoreServlet extends HttpServlet {
     private OnGoingMatchesService onGoingMatchesService;
     private MatchScoreCalculationService calculationService;
+    private FinishedMatchPersistenceService persistenceService;
     private static final String PLAYER_ID = "1";
 
 
@@ -26,6 +29,7 @@ public class MatchScoreServlet extends HttpServlet {
     public void init(ServletConfig config) {
         onGoingMatchesService = (OnGoingMatchesService) config.getServletContext().getAttribute("onGoingMatchesService");
         calculationService = (MatchScoreCalculationService) config.getServletContext().getAttribute("matchScoreCalculationService");
+        persistenceService = (FinishedMatchPersistenceService) config.getServletContext().getAttribute("finishedMatchPersistenceService");
     }
 
     @Override
@@ -46,14 +50,14 @@ public class MatchScoreServlet extends HttpServlet {
 
         Match match = onGoingMatchesService.get(uuid);
 
-
-        Player firstPlayer = match.getPlayer1();
-        Player secondPlayer = match.getPlayer2();
-
         PlayerNumber playerNumber = getPlayerNumber(player_id);
 
 
         calculationService.makeCalculations(match, playerNumber);
+
+        if (match.getMatchStatus() == MatchStatus.FINISHED) {
+            persistenceService.saveMatch(match);
+        }
 
         resp.sendRedirect("/match-score?uuid=" + uuid);
     }
