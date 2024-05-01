@@ -11,9 +11,9 @@
     <title>Match score</title>
 </head>
 <body>
-<div class="container">
-    <c:choose>
-        <c:when test="${match.winner eq null}">
+<c:choose>
+    <c:when test="${match.winner eq null}">
+        <div class="container">
             <table>
                 <tr>
                     <td><strong>PLAYER</strong></td>
@@ -52,27 +52,28 @@
                     </td>
                 </tr>
             </table>
-        </c:when>
-        <c:otherwise>
-            <div>
-                <p>${match.winner}</p>
+
+            <div class="ui-button">
+                <form method="post">
+                    <button class="first-button" name="player_id" type="submit" value="1">
+                        Player 1 wins point!
+                    </button>
+                </form>
+                <form method="post">
+                    <button class="second-button" name="player_id" type="submit" value="2">
+                        Player 2 wins point!
+                    </button>
+                </form>
             </div>
-        </c:otherwise>
-    </c:choose>
 
-    <div class="ui-button">
-        <form method="post">
-            <button class="first-button" name="player_id" type="submit" value="1">
-                Player 1 wins point!
-            </button>
-        </form>
-        <form method="post">
-            <button class="second-button" name="player_id" type="submit" value="2">
-                Player 2 wins point!
-            </button>
-        </form>
-    </div>
-
-</div>
+        </div>
+    </c:when>
+    <c:otherwise>
+        <div class="container">
+            <p class="text">${match.winner.name} IS WINNER !</p>
+            <a href="${pageContext.request.contextPath}/" class="link">To the main page</a>
+        </div>
+    </c:otherwise>
+</c:choose>
 </body>
 </html>

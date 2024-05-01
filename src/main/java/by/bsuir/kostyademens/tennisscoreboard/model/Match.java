@@ -27,6 +27,7 @@ public class Match {
     @JoinColumn(name = "player_2", nullable = false)
     private Player player2;
 
+
     @ManyToOne
     @JoinColumn(name = "winner", nullable = false)
     private Player winner;
