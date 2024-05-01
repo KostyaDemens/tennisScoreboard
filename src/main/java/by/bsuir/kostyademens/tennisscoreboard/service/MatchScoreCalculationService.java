@@ -33,9 +33,7 @@ public class MatchScoreCalculationService {
         incrementPoint(match, scoringPlayer);
 
 
-        if (scoringPlayer.getPlayerScore().getPoint() == Point.LOVE) {
-            resetPoints(match);
-        }
+
 
     }
 
@@ -46,13 +44,15 @@ public class MatchScoreCalculationService {
             resetTieBreakPoints(match);
             resetGames(match);
             if (isMatchCompleted(scoringPlayer)) {
-                return;
+                match.setWinner(scoringPlayer);
+                match.setMatchStatus(MatchStatus.FINISHED);
             } else {
                 match.setMatchStatus(MatchStatus.ONGOING);
             }
         }
 
     }
+
 
     public void checkIsAdvantage(Match match) {
         if (match.getPlayer1().getPlayerScore().getPoint() == Point.FORTY
@@ -124,12 +124,17 @@ public class MatchScoreCalculationService {
         if (scoringPlayer.getPlayerScore().getGame() >= 6 && getGameDifference(match) >= 2) {
             scoringPlayer.getPlayerScore().winSet();
             resetGames(match);
+            if (isMatchCompleted(scoringPlayer)) {
+                match.setWinner(scoringPlayer);
+                match.setMatchStatus(MatchStatus.FINISHED);
+            }
         }
     }
 
     public void incrementPoint(Match match, Player scoringPlayer) {
         if (scoringPlayer.getPlayerScore().getPoint() == Point.FORTY) {
             scoringPlayer.getPlayerScore().setPoint(Point.LOVE);
+            resetPoints(match);
             incrementGame(match, scoringPlayer);
         } else {
             scoringPlayer.getPlayerScore().winPoint();
