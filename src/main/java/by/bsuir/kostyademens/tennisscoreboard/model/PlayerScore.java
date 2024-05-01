@@ -7,9 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PlayerScore {
+    private int tieBreakPoint = 2;
     private int game;
     private int set;
-    private int tieBreakPoint;
     Point point = Point.LOVE;
 
 
@@ -24,10 +24,6 @@ public class PlayerScore {
 
     public void winGame() {
         this.game++;
-    }
-
-    public void winTieBreakPoint() {
-        this.tieBreakPoint++;
     }
 
     public void winSet() {

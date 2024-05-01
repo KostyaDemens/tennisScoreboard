@@ -40,7 +40,5 @@ public class Match {
     @Builder.Default
     private MatchStatus matchStatus = MatchStatus.ONGOING;
 
-    @Transient
-    private int maxMatchSets;
 
 }

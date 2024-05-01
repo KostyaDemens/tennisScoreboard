@@ -18,14 +18,13 @@ public class AdvantageStatusTest {
         Player playerOne = new Player("Vova");
         Player playerTwo = new Player("Petya");
         match = Match.builder()
-                .maxMatchSets(2)
                 .player1(playerOne)
                 .player2(playerTwo)
                 .build();
     }
 
     @Test
-    public void pointsShouldIncrementCorrectlyWhileMatchStatusIsAdvantage() {
+    public void pointsShouldIncrementCorrectlyWhenMatchStatusIsAdvantage() {
         Player playerOne = match.getPlayer1();
         Player playerTwo = match.getPlayer2();
 

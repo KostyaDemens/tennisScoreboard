@@ -16,7 +16,6 @@ public class TieBreakStatusTest {
         Player playerOne = new Player("Vova");
         Player playerTwo = new Player("Petya");
         match = Match.builder()
-                .maxMatchSets(2)
                 .player1(playerOne)
                 .player2(playerTwo)
                 .build();
@@ -31,10 +30,10 @@ public class TieBreakStatusTest {
         firstPlayer.getPlayerScore().setGame(6);
         secondPlayer.getPlayerScore().setGame(6);
 
-//        service.countPointIfTieBreak(match, firstPlayer);
-//        assertEquals(1, firstPlayer.getPlayerScore().getTieBreakPoint());
-//
-//        service.countPointIfTieBreak(match, secondPlayer);
-//        assertEquals(1, secondPlayer.getPlayerScore().getTieBreakPoint());
+        service.countPointIfTieBreak(match, firstPlayer);
+        assertEquals(1, firstPlayer.getPlayerScore().getPoint().ordinal());
+
+        service.countPointIfTieBreak(match, secondPlayer);
+        assertEquals(1, secondPlayer.getPlayerScore().getPoint().ordinal());
     }
 }

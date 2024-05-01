@@ -39,6 +39,11 @@ public class MatchScoreCalculationService {
 
     }
 
+    public void countPointIfTieBreak(Match match, Player scoringPlayer) {
+        incrementTieBreakPoint(scoringPlayer);
+        
+    }
+
     public void checkIsAdvantage(Match match) {
         if (match.getPlayer1().getPlayerScore().getPoint() == Point.FORTY
                 && match.getPlayer2().getPlayerScore().getPoint() == Point.FORTY) {
@@ -103,7 +108,8 @@ public class MatchScoreCalculationService {
     }
 
     public void incrementTieBreakPoint(Player scoringPlayer) {
-        scoringPlayer.getPlayerScore().winTieBreakPoint();
+        int tieBreakPoint = scoringPlayer.getPlayerScore().getPoint().ordinal();
+//        scoringPlayer.getPlayerScore().setPoint();
     }
 
     public void incrementAdvantagePoint(Player scoringPlayer, Player losingPlayer) {

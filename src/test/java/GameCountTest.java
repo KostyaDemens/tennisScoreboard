@@ -17,7 +17,6 @@ public class GameCountTest {
         Player playerOne = new Player();
         Player playerTwo = new Player();
         match = Match.builder()
-                .maxMatchSets(2)
                 .player1(playerOne)
                 .player2(playerTwo)
                 .build();

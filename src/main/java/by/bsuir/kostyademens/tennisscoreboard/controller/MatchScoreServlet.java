@@ -34,6 +34,7 @@ public class MatchScoreServlet extends HttpServlet {
         Match match = onGoingMatchesService.get(uuid);
         req.setAttribute("playerOne", match.getPlayer1());
         req.setAttribute("playerTwo", match.getPlayer2());
+        req.setAttribute("match", match);
         req.getRequestDispatcher("/jsp/matchScore.jsp").forward(req, resp);
 
     }
@@ -44,6 +45,7 @@ public class MatchScoreServlet extends HttpServlet {
         String player_id = req.getParameter("player_id");
 
         Match match = onGoingMatchesService.get(uuid);
+
 
         Player firstPlayer = match.getPlayer1();
         Player secondPlayer = match.getPlayer2();
