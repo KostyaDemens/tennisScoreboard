@@ -11,12 +11,16 @@ import by.bsuir.kostyademens.tennisscoreboard.util.PlayerNumber;
 public class MatchScoreCalculationService {
 
     public void makeCalculations(Match match, PlayerNumber player) {
+
+
         if (MatchStatusUtil.isMatchFinished(match)) {
             return;
         }
 
+
         Player scoringPlayer = getScoringPlayer(match, player);
         Player losingPlayer = getLosingPlayer(match, player);
+
 
         checkIsAdvantage(match);
         if (MatchStatusUtil.isAdvantage(match)) {
@@ -71,8 +75,16 @@ public class MatchScoreCalculationService {
     public void countPointIfAdvantage(Match match, Player scoringPlayer, Player losingPlayer) {
         incrementAdvantagePoint(scoringPlayer, losingPlayer);
         if (isAdvantageCompleted(scoringPlayer)) {
-            match.setMatchStatus(MatchStatus.ONGOING);
             resetPoints(match);
+            match.setMatchStatus(MatchStatus.ONGOING);
+            if (isGameWin(match, scoringPlayer)) {
+                scoringPlayer.getPlayerScore().winSet();
+                resetGames(match);
+                if (isMatchCompleted(scoringPlayer)) {
+                    match.setWinner(scoringPlayer);
+                    match.setMatchStatus(MatchStatus.FINISHED);
+                }
+            }
         }
     }
 
@@ -121,7 +133,7 @@ public class MatchScoreCalculationService {
 
     private void incrementGame(Match match, Player scoringPlayer) {
         scoringPlayer.getPlayerScore().winGame();
-        if (scoringPlayer.getPlayerScore().getGame() >= 6 && getGameDifference(match) >= 2) {
+        if (isGameWin(match, scoringPlayer)) {
             scoringPlayer.getPlayerScore().winSet();
             resetGames(match);
             if (isMatchCompleted(scoringPlayer)) {
@@ -139,6 +151,10 @@ public class MatchScoreCalculationService {
         } else {
             scoringPlayer.getPlayerScore().winPoint();
         }
+    }
+
+    private boolean isGameWin(Match match, Player scoringPlayer) {
+        return scoringPlayer.getPlayerScore().getGame() >= 6 && getGameDifference(match) >= 2;
     }
 
     public void incrementTieBreakPoint(Player scoringPlayer) {

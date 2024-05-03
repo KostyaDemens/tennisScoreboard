@@ -16,7 +16,11 @@ public class FinishedMatchPersistenceService {
         matchDao.save(match);
     }
 
-    public void selectAllMatches() {
-        matchDao.viewAllMatches(5, 10);
+    public List<Match> selectAllMatches(int page, int recordsPerPage) {
+        return matchDao.viewAllMatches(page, recordsPerPage);
+    }
+
+    public int getNoOfRecords() {
+        return matchDao.getNoOfRecords();
     }
 }
