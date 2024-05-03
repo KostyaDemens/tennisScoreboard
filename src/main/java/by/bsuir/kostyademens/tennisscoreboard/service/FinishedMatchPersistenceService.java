@@ -4,6 +4,8 @@ import by.bsuir.kostyademens.tennisscoreboard.dao.MatchDao;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.util.SessionFactoryUtil;
 
+import java.util.List;
+
 public class FinishedMatchPersistenceService {
 
     private final SessionFactoryUtil sessionFactoryUtil = new SessionFactoryUtil();
@@ -12,5 +14,9 @@ public class FinishedMatchPersistenceService {
 
     public void saveMatch(Match match) {
         matchDao.save(match);
+    }
+
+    public void selectAllMatches() {
+        matchDao.viewAllMatches(5, 10);
     }
 }

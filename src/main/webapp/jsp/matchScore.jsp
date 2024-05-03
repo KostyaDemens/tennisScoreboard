@@ -22,31 +22,31 @@
                     <td><strong>POINTS</strong></td>
                 </tr>
                 <tr>
-                    <td>${playerOne.name}</td>
-                    <td>${playerOne.playerScore.set}</td>
-                    <td>${playerOne.playerScore.game}</td>
+                    <td>${match.player1.name}</td>
+                    <td>${match.player1.playerScore.set}</td>
+                    <td>${match.player1.playerScore.game}</td>
                     <td>
                         <c:choose>
                             <c:when test="${match.matchStatus eq 'TIE_BREAK'}">
-                                <c:out value="${playerOne.playerScore.tieBreakPoint}"/>
+                                <c:out value="${match.player1.playerScore.tieBreakPoint}"/>
                             </c:when>
                             <c:otherwise>
-                                <c:out value="${playerOne.playerScore.point.score}"/>
+                                <c:out value="${match.player1.playerScore.point.score}"/>
                             </c:otherwise>
                         </c:choose>
                     </td>
                 </tr>
                 <tr>
-                    <td>${playerTwo.name}</td>
-                    <td>${playerTwo.playerScore.set}</td>
-                    <td>${playerTwo.playerScore.game}</td>
+                    <td>${match.player2.name}</td>
+                    <td>${match.player2.playerScore.set}</td>
+                    <td>${match.player2.playerScore.game}</td>
                     <td>
                         <c:choose>
                             <c:when test="${match.matchStatus eq 'TIE_BREAK'}">
-                                <c:out value="${playerTwo.playerScore.tieBreakPoint}"/>
+                                <c:out value="${match.player2.playerScore.tieBreakPoint}"/>
                             </c:when>
                             <c:otherwise>
-                                <c:out value="${playerTwo.playerScore.point.score}"/>
+                                <c:out value="${match.player2.playerScore.point.score}"/>
                             </c:otherwise>
                         </c:choose>
                     </td>

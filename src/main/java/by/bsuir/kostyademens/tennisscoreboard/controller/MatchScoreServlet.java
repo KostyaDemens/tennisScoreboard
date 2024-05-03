@@ -1,7 +1,6 @@
 package by.bsuir.kostyademens.tennisscoreboard.controller;
 
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
-import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.service.FinishedMatchPersistenceService;
 import by.bsuir.kostyademens.tennisscoreboard.service.MatchScoreCalculationService;
 import by.bsuir.kostyademens.tennisscoreboard.service.OnGoingMatchesService;
@@ -36,8 +35,6 @@ public class MatchScoreServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
         Match match = onGoingMatchesService.get(uuid);
-        req.setAttribute("playerOne", match.getPlayer1());
-        req.setAttribute("playerTwo", match.getPlayer2());
         req.setAttribute("match", match);
         req.getRequestDispatcher("/jsp/matchScore.jsp").forward(req, resp);
 
