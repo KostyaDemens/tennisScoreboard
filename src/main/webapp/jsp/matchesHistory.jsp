@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1>Matches history</h1>
-<form method="get" action="${pageContext.request.contextPath}/matches" >
+<form method="get" action="${pageContext.request.contextPath}/matches">
     <div class="search-bar">
         <label>
             <input type="text" name="filter_by_player_name" placeholder="Write player name">
@@ -42,7 +42,15 @@
                         <td>${i}</td>
                     </c:when>
                     <c:otherwise>
-                        <td><a href="/matches?page=${i}">${i}</a></td>
+                        <c:choose>
+                            <c:when test="${empty filter_by_player_name}">
+                                <td><a href="/matches?page=${i}">${i}</a></td>
+                            </c:when>
+                            <c:otherwise>
+                                <td><a href="/matches?page=${i}&filter_by_player_name=${filter_by_player_name}">${i}</a></td>
+                            </c:otherwise>
+
+                        </c:choose>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>

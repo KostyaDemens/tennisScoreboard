@@ -4,6 +4,7 @@ package by.bsuir.kostyademens.tennisscoreboard.controller;
 import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
+import by.bsuir.kostyademens.tennisscoreboard.model.Point;
 import by.bsuir.kostyademens.tennisscoreboard.service.NewMatchService;
 import by.bsuir.kostyademens.tennisscoreboard.service.OnGoingMatchesService;
 import jakarta.servlet.ServletConfig;
