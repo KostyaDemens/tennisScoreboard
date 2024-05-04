@@ -10,11 +10,14 @@
 </head>
 <body>
 <h1>Matches history</h1>
-<div class="search-bar">
-    <label>
-        <input type="text" placeholder="Write player name">
-    </label>
-</div>
+<form method="get" action="${pageContext.request.contextPath}/matches" >
+    <div class="search-bar">
+        <label>
+            <input type="text" name="filter_by_player_name" placeholder="Write player name">
+        </label>
+    </div>
+    <button type="submit">Search</button>
+</form>
 <div class="container">
     <table>
         <tr>

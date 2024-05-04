@@ -2,7 +2,6 @@ package by.bsuir.kostyademens.tennisscoreboard.controller;
 
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.service.FinishedMatchPersistenceService;
-
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,14 +24,23 @@ public class MatchesServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String playerName = req.getParameter("filter_by_player_name");
         int page = 1;
         int recordsPerPage = 5;
         if (req.getParameter("page") != null) {
             page = Integer.parseInt(req.getParameter("page"));
         }
 
-        List<Match> matches = finishedService.selectAllMatches((page - 1)*recordsPerPage, recordsPerPage);
-        int noOfRecords = finishedService.getNoOfRecords();
+        List<Match> matches;
+        int noOfRecords;
+
+        if (playerName == null) {
+            matches = finishedService.selectAllMatches((page - 1) * recordsPerPage, recordsPerPage);
+            noOfRecords = finishedService.getNoOfRecords();
+        } else {
+            matches = finishedService.filterMatchesByName(playerName, (page - 1) * recordsPerPage, recordsPerPage);
+            noOfRecords = finishedService.getNoOfRecords();
+        }
 
         //Определяем сколько нам нужно страниц
         int noOfPage = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);

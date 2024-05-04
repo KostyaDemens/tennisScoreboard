@@ -33,14 +33,48 @@ public class MatchDao {
             TypedQuery<Match> matches = session.createQuery("SELECT m from Match m", Match.class);
             matches.setFirstResult(offset);
             matches.setMaxResults(noOfRecords);
-
-            //Получить общее кол-во записей в БД
-            TypedQuery<Long> countQuery = session.createQuery("SELECT COUNT(m) FROM Match m", Long.class);
-            long totalRecords = countQuery.getSingleResult();
-            this.noOfRecords = (int) totalRecords;
+            this.noOfRecords = countAllMatchesInTheDataBase();
 
             session.getTransaction().commit();
             return matches.getResultList();
+        }
+    }
+
+    public List<Match> findByName(String name, int offset, int noOfRecords) {
+        try (Session session = sessionFactoryUtil.getSession()) {
+            session.beginTransaction();
+            TypedQuery<Match> matches = session.createQuery("select m from Match m where m.player1.name = :name OR m.player2.name = :name", Match.class)
+                    .setParameter("name", name);
+            matches.setFirstResult(offset);
+            matches.setMaxResults(noOfRecords);
+
+            this.noOfRecords = countMatchesByName(name);
+
+            session.getTransaction().commit();
+            return matches.getResultList();
+        }
+    }
+
+    public int countAllMatchesInTheDataBase() {
+        try (Session session = sessionFactoryUtil.getSession()) {
+            session.beginTransaction();
+            TypedQuery<Long> countQuery = session.createQuery("SELECT COUNT(m) FROM Match m", Long.class);
+            long totalRecords = countQuery.getSingleResult();
+            this.noOfRecords = (int) totalRecords;
+            session.getTransaction().commit();
+            return this.noOfRecords;
+        }
+    }
+
+    public int countMatchesByName(String name) {
+        try (Session session = sessionFactoryUtil.getSession()) {
+            session.beginTransaction();
+            TypedQuery<Long> matches = session.createQuery("select count(m) from Match m WHERE m.player1.name = :name or m.player2.name = :name", Long.class)
+                    .setParameter("name", name);
+            long totalRecords = matches.getSingleResult();
+            this.noOfRecords = (int) totalRecords;
+            session.getTransaction().commit();
+            return this.noOfRecords;
         }
     }
 

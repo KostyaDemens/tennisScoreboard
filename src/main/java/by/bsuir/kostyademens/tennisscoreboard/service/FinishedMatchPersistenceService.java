@@ -20,6 +20,10 @@ public class FinishedMatchPersistenceService {
         return matchDao.viewAllMatches(page, recordsPerPage);
     }
 
+    public List<Match> filterMatchesByName(String name, int page, int recordsPerPage) {
+        return matchDao.findByName(name, page, recordsPerPage);
+    }
+
     public int getNoOfRecords() {
         return matchDao.getNoOfRecords();
     }
