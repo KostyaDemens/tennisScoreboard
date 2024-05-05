@@ -11,13 +11,5 @@ import java.util.List;
 
 public class TestMain {
     public static void main(String[] args) {
-
-        SessionFactoryUtil sessionFactoryUtil = new SessionFactoryUtil();
-        MatchDao dao = new MatchDao(sessionFactoryUtil);
-
-        List<Match> matches = dao.findByName("BOB", 1, 5);
-//        List<Match> matches = dao.viewAllMatches(1, 5);
-        System.out.println(matches);
-        System.out.println(matches.size());
     }
 }
