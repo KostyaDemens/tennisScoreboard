@@ -10,6 +10,12 @@
 </head>
 <body>
 <h1>Create new match</h1>
+<% if (request.getAttribute("errorMessage") != null) { %>
+<div class="error-message">
+    <%= request.getAttribute("errorMessage") %>
+</div>
+<% } %>
+
 <form method="post" action="${pageContext.request.contextPath}/new-match">
     <div class="input-container">
         <div>

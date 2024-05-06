@@ -43,6 +43,12 @@ private OnGoingMatchesService onGoingMatchesService;
         Player firstPlayer = new Player(playerOne.toUpperCase());
         Player secondPlayer = new Player(playerTwo.toUpperCase());
 
+        if (!isNameValid(firstPlayer.getName()) || !isNameValid(secondPlayer.getName())) {
+            req.setAttribute("errorMessage", "Некорректное имя игрока. Оно не должно содержать никаких символов, кроме символов русского и английского алфавита");
+            req.getRequestDispatcher("/jsp/newMatch.jsp").forward(req, resp);
+            return;
+        }
+
         // Генерируем UUID и кладём матч в коллекцию матчей
         Match match = newMatchService.createNewMatch(firstPlayer, secondPlayer);
         UUID uuid = onGoingMatchesService.add(match);
@@ -51,5 +57,12 @@ private OnGoingMatchesService onGoingMatchesService;
         resp.sendRedirect("match-score?uuid=" + uuid);
 
 
+    }
+
+    private boolean isNameValid(String name) {
+        if (name == null) {
+            return false;
+        }
+        return name.matches("^[a-zA-Zа-яА-Я]+$");
     }
 }
