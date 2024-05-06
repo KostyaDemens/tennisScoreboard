@@ -10,18 +10,15 @@
 </head>
 <body>
 <h1>Matches history</h1>
-<form method="get" action="${pageContext.request.contextPath}/matches" id="searchForm">
+<form method="get" action="${pageContext.request.contextPath}/matches">
     <div class="search-bar">
         <label>
-            <input type="text" name="filter_by_player_name" id="playerName" placeholder="Write player name">
+            <input type="text" name="filter_by_player_name" placeholder="Write player name">
         </label>
     </div>
     <button type="submit">Search</button>
-    <a href="${pageContext.request.contextPath}matches">
-        <button type="button">Reset filter</button>
-    </a>
+    <input type="reset" value="Reset"/>
 </form>
-
 
 <div class="container">
     <table>
@@ -30,40 +27,36 @@
             <td><strong>Player two name</strong></td>
             <td><strong>Winner</strong></td>
         </tr>
-        <c:forEach var="match" items="${requestScope.matches}">
+        <c:forEach var="match" items="${requestScope.matches}">--%>
             <tr>
                 <td>${match.player1.name}</td>
                 <td>${match.player2.name}</td>
                 <td>${match.winner.name}</td>
             </tr>
         </c:forEach>
+        <!-- Your existing table rows here -->
     </table>
+        <div class="pagination">
 
-    <table>
-        <tr>
             <c:forEach begin="1" end="${noOfPage}" var="i">
-                <c:choose>
-                    <c:when test="${currentPage eq i}">
-                        <td>${i}</td>
-                    </c:when>
-                    <c:otherwise>
-                        <c:choose>
-                            <c:when test="${empty filter_by_player_name}">
-                                <td><a href="/matches?page=${i}">${i}</a></td>
-                            </c:when>
-                            <c:otherwise>
-                                <td><a href="/matches?page=${i}&filter_by_player_name=${filter_by_player_name}">${i}</a>
-                                </td>
-                            </c:otherwise>
-
-                        </c:choose>
-                    </c:otherwise>
-                </c:choose>
+                    <c:choose>
+                        <c:when test="${currentPage eq i}">
+                            <a href="#" class="active">${i}</a>
+                        </c:when>
+                        <c:otherwise>
+                            <c:choose>
+                                <c:when test="${empty filter_by_player_name}">
+                                    <a class="page-link" href="${pageContext.request.contextPath}/matches?page=${i}" >${i}</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a class="page-link"
+                                       href="${pageContext.request.contextPath}/matches?page=${i}&filter_by_player_name=${filter_by_player_name}">${i}</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:otherwise>
+                    </c:choose>
             </c:forEach>
-        </tr>
-    </table>
-
-
+        </div>
 </div>
 </body>
 </html>
