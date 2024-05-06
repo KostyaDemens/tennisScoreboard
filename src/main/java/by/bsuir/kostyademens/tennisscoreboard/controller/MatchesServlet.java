@@ -34,9 +34,10 @@ public class MatchesServlet extends HttpServlet {
         List<Match> matches;
 
 
-        if (playerName == null) {
+        if (playerName == null || playerName.isEmpty()) {
             matches = finishedService.selectAllMatches((page - 1) * recordsPerPage, recordsPerPage);
         } else {
+            playerName = playerName.toUpperCase();
             matches = finishedService.filterMatchesByName(playerName, (page - 1) * recordsPerPage, recordsPerPage);
             req.setAttribute("filter_by_player_name", playerName);
         }
@@ -45,9 +46,9 @@ public class MatchesServlet extends HttpServlet {
         //Определяем сколько нам нужно страниц
         int noOfPage = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
-        req.setAttribute("matches", matches);
         req.setAttribute("noOfPage", noOfPage);
         req.setAttribute("currentPage", page);
+        req.setAttribute("matches", matches);
 
         req.getRequestDispatcher("/jsp/matchesHistory.jsp").forward(req, resp);
     }
