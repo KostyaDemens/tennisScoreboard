@@ -17,15 +17,28 @@ h1 {
     height: 13vh;
 }
 
-input {
-    width: 200px;
-    padding: 10px; /* Пространство вокруг элемента */
-}
+
+/*button {*/
+/*    padding: 10px 20px;*/
+/*    background-color: white;*/
+/*    color: black;*/
+/*    cursor: pointer;*/
+/*}*/
 
 button {
     padding: 10px 20px;
-    
-    background-color: white;
-    color: black;
+    background-color: #0074D9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    width: 150px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
 }

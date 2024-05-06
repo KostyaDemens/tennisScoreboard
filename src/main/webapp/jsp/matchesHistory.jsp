@@ -16,8 +16,10 @@
             <input type="text" name="filter_by_player_name" placeholder="Write player name">
         </label>
     </div>
-    <button type="submit">Search</button>
-    <input type="reset" value="Reset"/>
+    <div class="button-container">
+        <button type="submit">Search</button>
+        <button type="reset">Reset</button>
+    </div>
 </form>
 
 <div class="container">
@@ -36,27 +38,27 @@
         </c:forEach>
         <!-- Your existing table rows here -->
     </table>
-        <div class="pagination">
+    <div class="pagination">
 
-            <c:forEach begin="1" end="${noOfPage}" var="i">
+        <c:forEach begin="1" end="${noOfPage}" var="i">
+            <c:choose>
+                <c:when test="${currentPage eq i}">
+                    <a href="#" class="active">${i}</a>
+                </c:when>
+                <c:otherwise>
                     <c:choose>
-                        <c:when test="${currentPage eq i}">
-                            <a href="#" class="active">${i}</a>
+                        <c:when test="${empty filter_by_player_name}">
+                            <a class="page-link" href="${pageContext.request.contextPath}/matches?page=${i}">${i}</a>
                         </c:when>
                         <c:otherwise>
-                            <c:choose>
-                                <c:when test="${empty filter_by_player_name}">
-                                    <a class="page-link" href="${pageContext.request.contextPath}/matches?page=${i}" >${i}</a>
-                                </c:when>
-                                <c:otherwise>
-                                    <a class="page-link"
-                                       href="${pageContext.request.contextPath}/matches?page=${i}&filter_by_player_name=${filter_by_player_name}">${i}</a>
-                                </c:otherwise>
-                            </c:choose>
+                            <a class="page-link"
+                               href="${pageContext.request.contextPath}/matches?page=${i}&filter_by_player_name=${filter_by_player_name}">${i}</a>
                         </c:otherwise>
                     </c:choose>
-            </c:forEach>
-        </div>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </div>
 </div>
 </body>
 </html>

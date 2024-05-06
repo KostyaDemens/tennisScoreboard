@@ -1,11 +1,13 @@
-
-
+body {
+    overflow: hidden;
+}
 
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: -250px;
     height: 100vh;
 }
 
@@ -32,21 +34,24 @@ input[type="text"] {
 }
 
 /* Стили для кнопок */
-button, input[type="reset"] {
+button {
     padding: 10px 20px;
     background-color: #0074D9;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 100px;
+}
+
+.button-container {
+    display: inline-block;
 }
 
 table {
     width: 80%;
     max-width: 600px;
     border-collapse: collapse;
-    margin-bottom: 280px;
-
 }
 table, th, td {
     border: 1px solid black;
@@ -54,6 +59,12 @@ table, th, td {
 th, td {
     padding: 10px;
     text-align: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center; /* Размещение по горизонтали */
+    margin-top: 20px; /* Добавьте отступ сверху */
 }
 
 .pagination a {

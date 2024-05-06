@@ -1,3 +1,7 @@
+body {
+    overflow: hidden;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -28,10 +32,13 @@ th, td {
     justify-content: space-between;
 }
 .first-button, .second-button {
-    padding: 10px;
-    background-color: white;
-    color: black;
-    cursor: pointer;
+        padding: 10px 20px;
+        background-color: #0074D9;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 180px;
 }
 
 

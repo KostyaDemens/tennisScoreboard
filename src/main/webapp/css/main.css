@@ -1,4 +1,7 @@
-@import url("common.css");
+body {
+    overflow: hidden;
+}
+
 
 .links_container {
     display: flex;
