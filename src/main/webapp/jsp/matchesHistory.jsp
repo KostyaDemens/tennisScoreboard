@@ -17,7 +17,9 @@
         </label>
     </div>
     <button type="submit">Search</button>
-    <button type="submit">Reset</button>
+    <a href="${pageContext.request.contextPath}matches">
+        <button type="button">Reset filter</button>
+    </a>
 </form>
 
 

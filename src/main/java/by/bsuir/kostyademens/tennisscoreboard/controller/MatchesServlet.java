@@ -25,7 +25,6 @@ public class MatchesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String playerName = req.getParameter("filter_by_player_name");
-
         int page = 1;
         int recordsPerPage = 5;
         if (req.getParameter("page") != null) {
@@ -34,7 +33,8 @@ public class MatchesServlet extends HttpServlet {
 
         List<Match> matches;
 
-        if (playerName == null || playerName.isEmpty()) {
+
+        if (playerName == null) {
             matches = finishedService.selectAllMatches((page - 1) * recordsPerPage, recordsPerPage);
         } else {
             matches = finishedService.filterMatchesByName(playerName, (page - 1) * recordsPerPage, recordsPerPage);
@@ -49,8 +49,7 @@ public class MatchesServlet extends HttpServlet {
         req.setAttribute("noOfPage", noOfPage);
         req.setAttribute("currentPage", page);
 
-
-
-        req.getRequestDispatcher("/jsp/matchesHistory.jsp").forward(req,resp);
+        req.getRequestDispatcher("/jsp/matchesHistory.jsp").forward(req, resp);
     }
 }
+
