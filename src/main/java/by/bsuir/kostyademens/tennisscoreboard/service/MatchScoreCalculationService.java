@@ -37,8 +37,6 @@ public class MatchScoreCalculationService {
         incrementPoint(match, scoringPlayer);
 
 
-
-
     }
 
     public void countPointIfTieBreak(Match match, Player scoringPlayer) {

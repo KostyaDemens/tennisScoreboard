@@ -12,7 +12,6 @@ public class NewMatchService {
     private final PlayerDao playerDao = new PlayerDao(sessionFactoryUtil);
 
 
-
     public Player findOrCreatePlayer(Player player) {
         return (playerDao.findByName(player.getName())
                 .orElseGet(() -> playerDao.save(player)));

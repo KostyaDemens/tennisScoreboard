@@ -22,6 +22,7 @@ public class MatchDao {
         this.sessionFactoryUtil = sessionFactoryUtil;
         sessionFactoryUtil.init();
     }
+
     public void save(Match match) {
         try (Session session = sessionFactoryUtil.getSession()) {
             session.beginTransaction();

@@ -17,8 +17,8 @@ import java.util.UUID;
 
 @WebServlet("/new-match")
 public class NewMatchServlet extends HttpServlet {
-private NewMatchService newMatchService;
-private OnGoingMatchesService onGoingMatchesService;
+    private NewMatchService newMatchService;
+    private OnGoingMatchesService onGoingMatchesService;
 
     @Override
     public void init(ServletConfig config) {
