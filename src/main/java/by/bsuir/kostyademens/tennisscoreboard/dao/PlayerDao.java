@@ -5,7 +5,6 @@ import by.bsuir.kostyademens.tennisscoreboard.util.SessionFactoryUtil;
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
 
-import java.util.List;
 import java.util.Optional;
 
 public class PlayerDao {

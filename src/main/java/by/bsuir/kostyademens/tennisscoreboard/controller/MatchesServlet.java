@@ -1,7 +1,6 @@
 package by.bsuir.kostyademens.tennisscoreboard.controller;
 
 import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
-import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.service.FinishedMatchPersistenceService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;

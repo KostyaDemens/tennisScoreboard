@@ -1,6 +1,5 @@
 package by.bsuir.kostyademens.tennisscoreboard.dto;
 
-import by.bsuir.kostyademens.tennisscoreboard.model.PlayerScore;
 import lombok.*;
 
 @Builder

@@ -8,7 +8,6 @@ import lombok.*;
 @Setter
 @ToString
 @Entity
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "players")

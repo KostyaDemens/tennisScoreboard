@@ -50,14 +50,16 @@ public class MatchScoreServlet extends HttpServlet {
 
         Match match = onGoingMatchesService.get(uuid);
 
+        if (match.getMatchStatus() == MatchStatus.FINISHED) {
+            onGoingMatchesService.remove(uuid);
+            persistenceService.saveMatch(match);
+            req.getRequestDispatcher("/jsp/matchScore.jsp").forward(req, resp);
+        }
         PlayerNumber playerNumber = getPlayerNumber(player_id);
 
 
         calculationService.makeCalculations(match, playerNumber);
 
-        if (match.getMatchStatus() == MatchStatus.FINISHED) {
-            persistenceService.saveMatch(match);
-        }
 
         resp.sendRedirect("/match-score?uuid=" + uuid);
     }

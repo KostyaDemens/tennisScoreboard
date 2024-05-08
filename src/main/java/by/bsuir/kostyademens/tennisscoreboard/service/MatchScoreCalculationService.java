@@ -143,6 +143,7 @@ public class MatchScoreCalculationService {
         }
     }
 
+    // Оставил паблик, что бы можно было использовать в тестах
     public void incrementPoint(Match match, Player scoringPlayer) {
         if (scoringPlayer.getPlayerScore().getPoint() == Point.FORTY) {
             scoringPlayer.getPlayerScore().setPoint(Point.LOVE);
@@ -157,11 +158,11 @@ public class MatchScoreCalculationService {
         return scoringPlayer.getPlayerScore().getGame() >= 6 && getGameDifference(match) >= 2;
     }
 
-    public void incrementTieBreakPoint(Player scoringPlayer) {
+    private void incrementTieBreakPoint(Player scoringPlayer) {
         scoringPlayer.getPlayerScore().winTieBreakPoint();
     }
 
-    public void incrementAdvantagePoint(Player scoringPlayer, Player losingPlayer) {
+    private void incrementAdvantagePoint(Player scoringPlayer, Player losingPlayer) {
         if (scoringPlayer.getPlayerScore().getPoint() == Point.ADVANTAGE) {
             scoringPlayer.getPlayerScore().setPoint(Point.LOVE);
             if (isAdvantageCompleted(scoringPlayer)) {

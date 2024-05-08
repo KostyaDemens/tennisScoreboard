@@ -19,9 +19,4 @@ public class SessionFactoryUtil {
         return sessionFactory.openSession();
     }
 
-    public void shotDown() {
-        if (sessionFactory != null) {
-            sessionFactory.close();
-        }
-    }
 }
