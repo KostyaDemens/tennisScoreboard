@@ -20,6 +20,10 @@
         <button type="button" onclick="submitForm()">Search</button>
         <button type="button" onclick="resetForm()">Reset</button>
     </div>
+    <div class="button-container">
+        <button type="button" onclick="forwardToTheMainPage()">To the main page</button>
+
+    </div>
 </form>
 
 <script>
@@ -34,6 +38,10 @@
     function resetForm() {
         window.location.href="${pageContext.request.contextPath}/matches"
     }
+
+    function forwardToTheMainPage() {
+        window.location.href="${pageContext.request.contextPath}/"
+    }
 </script>
 
 <div class="container">
@@ -45,9 +53,9 @@
         </tr>
         <c:forEach var="match" items="${requestScope.matches}">
             <tr>
-                <td>${match.player1.name}</td>
-                <td>${match.player2.name}</td>
-                <td>${match.winner.name}</td>
+                <td>${match.playerOne.playerName}</td>
+                <td>${match.playerTwo.playerName}</td>
+                <td>${match.playerWinner.playerName}</td>
             </tr>
         </c:forEach>
     </table>

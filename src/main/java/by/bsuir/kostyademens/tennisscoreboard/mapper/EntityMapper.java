@@ -7,7 +7,9 @@ import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.model.PlayerScore;
 
+
 public class EntityMapper {
+
 
     public static MatchDto toDto(Match match) {
         PlayerDto playerOneDto = toDto(match.getPlayer1());

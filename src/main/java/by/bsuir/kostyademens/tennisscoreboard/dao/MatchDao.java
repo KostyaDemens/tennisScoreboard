@@ -1,11 +1,14 @@
 package by.bsuir.kostyademens.tennisscoreboard.dao;
 
+import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
+import by.bsuir.kostyademens.tennisscoreboard.mapper.EntityMapper;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.util.SessionFactoryUtil;
 import jakarta.persistence.TypedQuery;
 import lombok.Getter;
 import org.hibernate.Session;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MatchDao {
@@ -27,32 +30,37 @@ public class MatchDao {
         }
     }
 
-    public List<Match> viewAllMatches(int offset, int noOfRecords) {
+    public List<MatchDto> viewAllMatches(int offset, int noOfRecords) {
         try (Session session = sessionFactoryUtil.getSession()) {
             session.beginTransaction();
-            TypedQuery<Match> matches = session.createQuery("SELECT m from Match m", Match.class);
-            matches.setFirstResult(offset);
-            matches.setMaxResults(noOfRecords);
+            TypedQuery<Match> matchesQuery = session.createQuery("SELECT m from Match m", Match.class);
+            matchesQuery.setFirstResult(offset);
+            matchesQuery.setMaxResults(noOfRecords);
             this.noOfRecords = countAllMatchesInTheDataBase();
-
-            session.getTransaction().commit();
-            return matches.getResultList();
+            return getMatchDtos(session, matchesQuery);
         }
     }
 
-    public List<Match> findByName(String name, int offset, int noOfRecords) {
+    public List<MatchDto> findByName(String name, int offset, int noOfRecords) {
         try (Session session = sessionFactoryUtil.getSession()) {
             session.beginTransaction();
-            TypedQuery<Match> matches = session.createQuery("select m from Match m where m.player1.name = :name OR m.player2.name = :name", Match.class)
+            TypedQuery<Match> matchesQuery = session.createQuery("select m from Match m where m.player1.name = :name OR m.player2.name = :name", Match.class)
                     .setParameter("name", name);
-            matches.setFirstResult(offset);
-            matches.setMaxResults(noOfRecords);
-
+            matchesQuery.setFirstResult(offset);
+            matchesQuery.setMaxResults(noOfRecords);
             this.noOfRecords = countMatchesByName(name);
-
-            session.getTransaction().commit();
-            return matches.getResultList();
+            return getMatchDtos(session, matchesQuery);
         }
+    }
+
+    private List<MatchDto> getMatchDtos(Session session, TypedQuery<Match> matchesQuery) {
+        List<Match> matches = matchesQuery.getResultList();
+        session.getTransaction().commit();
+        List<MatchDto> matchDtos = new ArrayList<>();
+        for (Match match : matches) {
+            matchDtos.add(EntityMapper.toDto(match));
+        }
+        return matchDtos;
     }
 
     public int countAllMatchesInTheDataBase() {

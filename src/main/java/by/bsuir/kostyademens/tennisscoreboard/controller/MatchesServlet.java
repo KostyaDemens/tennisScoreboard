@@ -1,5 +1,6 @@
 package by.bsuir.kostyademens.tennisscoreboard.controller;
 
+import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.service.FinishedMatchPersistenceService;
 import jakarta.servlet.ServletConfig;
@@ -31,11 +32,12 @@ public class MatchesServlet extends HttpServlet {
             page = Integer.parseInt(req.getParameter("page"));
         }
 
-        List<Match> matches;
+        List<MatchDto> matches;
 
 
         if (playerName == null || playerName.isEmpty()) {
             matches = finishedService.selectAllMatches((page - 1) * recordsPerPage, recordsPerPage);
+
         } else {
             playerName = playerName.toUpperCase();
             matches = finishedService.filterMatchesByName(playerName, (page - 1) * recordsPerPage, recordsPerPage);

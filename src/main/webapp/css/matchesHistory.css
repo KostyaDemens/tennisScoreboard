@@ -41,11 +41,15 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 100px;
+    width: 150px;
 }
 
 .button-container {
     display: inline-block;
+}
+
+.button-container button {
+    margin-bottom: 10px;
 }
 
 table {
