@@ -1,5 +1,7 @@
 package by.bsuir.kostyademens.tennisscoreboard.controller;
 
+import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
+import by.bsuir.kostyademens.tennisscoreboard.mapper.EntityMapper;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.service.FinishedMatchPersistenceService;
 import by.bsuir.kostyademens.tennisscoreboard.service.MatchScoreCalculationService;
@@ -35,7 +37,8 @@ public class MatchScoreServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
         Match match = onGoingMatchesService.get(uuid);
-        req.setAttribute("match", match);
+        MatchDto matchDto = EntityMapper.toDto(match);
+        req.setAttribute("match", matchDto);
         req.getRequestDispatcher("/jsp/matchScore.jsp").forward(req, resp);
 
     }

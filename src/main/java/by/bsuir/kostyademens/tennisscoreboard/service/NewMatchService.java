@@ -1,8 +1,6 @@
 package by.bsuir.kostyademens.tennisscoreboard.service;
 
 import by.bsuir.kostyademens.tennisscoreboard.dao.PlayerDao;
-import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
-import by.bsuir.kostyademens.tennisscoreboard.mapper.MatchDtoMapper;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.util.SessionFactoryUtil;

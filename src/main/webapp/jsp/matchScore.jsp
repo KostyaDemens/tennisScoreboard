@@ -12,7 +12,7 @@
 </head>
 <body>
 <c:choose>
-    <c:when test="${match.winner eq null}">
+    <c:when test="${match.playerWinner eq null}">
         <div class="container">
             <table>
                 <tr>
@@ -22,31 +22,31 @@
                     <td><strong>POINTS</strong></td>
                 </tr>
                 <tr>
-                    <td>${match.player1.name}</td>
-                    <td>${match.player1.playerScore.set}</td>
-                    <td>${match.player1.playerScore.game}</td>
+                    <td>${match.playerOne.playerName}</td>
+                    <td>${match.playerOne.playerScore.set}</td>
+                    <td>${match.playerOne.playerScore.game}</td>
                     <td>
                         <c:choose>
-                            <c:when test="${match.matchStatus eq 'TIE_BREAK'}">
-                                <c:out value="${match.player1.playerScore.tieBreakPoint}"/>
+                            <c:when test="${match.status eq 'TIE_BREAK'}">
+                                <c:out value="${match.playerOne.playerScore.tieBreakPoint}"/>
                             </c:when>
                             <c:otherwise>
-                                <c:out value="${match.player1.playerScore.point.score}"/>
+                                <c:out value="${match.playerOne.playerScore.point.score}"/>
                             </c:otherwise>
                         </c:choose>
                     </td>
                 </tr>
                 <tr>
-                    <td>${match.player2.name}</td>
-                    <td>${match.player2.playerScore.set}</td>
-                    <td>${match.player2.playerScore.game}</td>
+                    <td>${match.playerTwo.playerName}</td>
+                    <td>${match.playerTwo.playerScore.set}</td>
+                    <td>${match.playerTwo.playerScore.game}</td>
                     <td>
                         <c:choose>
-                            <c:when test="${match.matchStatus eq 'TIE_BREAK'}">
-                                <c:out value="${match.player2.playerScore.tieBreakPoint}"/>
+                            <c:when test="${match.status eq 'TIE_BREAK'}">
+                                <c:out value="${match.playerTwo.playerScore.tieBreakPoint}"/>
                             </c:when>
                             <c:otherwise>
-                                <c:out value="${match.player2.playerScore.point.score}"/>
+                                <c:out value="${match.playerTwo.playerScore.point.score}"/>
                             </c:otherwise>
                         </c:choose>
                     </td>
@@ -70,7 +70,7 @@
     </c:when>
     <c:otherwise>
         <div class="container">
-            <p class="text">${match.winner.name} IS WINNER !</p>
+            <p class="text">${match.playerWinner.playerName} IS WINNER !</p>
             <a href="${pageContext.request.contextPath}/" class="link">To the main page</a>
         </div>
     </c:otherwise>
