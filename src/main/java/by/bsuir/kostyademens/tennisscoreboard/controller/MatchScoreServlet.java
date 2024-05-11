@@ -3,6 +3,7 @@ package by.bsuir.kostyademens.tennisscoreboard.controller;
 import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
 import by.bsuir.kostyademens.tennisscoreboard.mapper.EntityMapper;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
+import by.bsuir.kostyademens.tennisscoreboard.model.Point;
 import by.bsuir.kostyademens.tennisscoreboard.service.FinishedMatchPersistenceService;
 import by.bsuir.kostyademens.tennisscoreboard.service.MatchScoreCalculationService;
 import by.bsuir.kostyademens.tennisscoreboard.service.OnGoingMatchesService;
@@ -35,10 +36,15 @@ public class MatchScoreServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
         Match match = onGoingMatchesService.get(uuid);
         MatchDto matchDto = EntityMapper.toDto(match);
         req.setAttribute("match", matchDto);
+        if (match.getMatchStatus() == MatchStatus.FINISHED) {
+            persistenceService.saveMatch(match);
+            onGoingMatchesService.remove(uuid);
+        }
         req.getRequestDispatcher("/jsp/matchScore.jsp").forward(req, resp);
 
     }
@@ -49,19 +55,17 @@ public class MatchScoreServlet extends HttpServlet {
         String player_id = req.getParameter("player_id");
 
         Match match = onGoingMatchesService.get(uuid);
+        match.getPlayer1().getPlayerScore().setPoint(Point.FORTY);
+        match.getPlayer1().getPlayerScore().setGame(5);
+        match.getPlayer1().getPlayerScore().setSet(1);
 
-        if (match.getMatchStatus() == MatchStatus.FINISHED) {
-            onGoingMatchesService.remove(uuid);
-            persistenceService.saveMatch(match);
-            req.getRequestDispatcher("/jsp/matchScore.jsp").forward(req, resp);
-        }
         PlayerNumber playerNumber = getPlayerNumber(player_id);
-
-
         calculationService.makeCalculations(match, playerNumber);
 
 
         resp.sendRedirect("/match-score?uuid=" + uuid);
+
+
     }
 
     private PlayerNumber getPlayerNumber(String player_id) {

@@ -12,12 +12,3 @@ INSERT INTO matches(player_1, player_2, winner) VALUES ( 3, 2, 2);
 INSERT INTO matches(player_1, player_2, winner) VALUES ( 5, 2, 2);
 INSERT INTO matches(player_1, player_2, winner) VALUES ( 2, 1, 2 );
 
-INSERT INTO matches(player_1, player_2, winner) VALUES ( 4, 1, 1 );
-INSERT INTO matches(player_1, player_2, winner) VALUES ( 3, 4, 3 );
-INSERT INTO matches(player_1, player_2, winner) VALUES ( 4, 5, 4 );
-INSERT INTO matches(player_1, player_2, winner) VALUES ( 2, 4, 2 );
-INSERT INTO matches(player_1, player_2, winner) VALUES ( 4, 1, 4 );
-INSERT INTO matches(player_1, player_2, winner) VALUES ( 2, 4, 2 );
-INSERT INTO matches(player_1, player_2, winner) VALUES ( 2, 4, 2 );
-INSERT INTO matches(player_1, player_2, winner) VALUES ( 2, 4, 2 );
-

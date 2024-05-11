@@ -5,7 +5,6 @@ import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.model.Point;
 import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatus;
-import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatusUtil;
 import by.bsuir.kostyademens.tennisscoreboard.util.PlayerNumber;
 
 public class MatchScoreCalculationService {
@@ -13,7 +12,7 @@ public class MatchScoreCalculationService {
     public void makeCalculations(Match match, PlayerNumber player) {
 
 
-        if (MatchStatusUtil.isMatchFinished(match)) {
+        if (match.getMatchStatus() == MatchStatus.FINISHED) {
             return;
         }
 
@@ -23,13 +22,13 @@ public class MatchScoreCalculationService {
 
 
         checkIsAdvantage(match);
-        if (MatchStatusUtil.isAdvantage(match)) {
+        if (match.getMatchStatus() == MatchStatus.ADVANTAGE) {
             countPointIfAdvantage(match, scoringPlayer, losingPlayer);
             return;
         }
 
         checkIsTieBreak(match);
-        if (MatchStatusUtil.isTieBreak(match)) {
+        if (match.getMatchStatus() == MatchStatus.TIE_BREAK) {
             countPointIfTieBreak(match, scoringPlayer);
             return;
         }
@@ -39,7 +38,7 @@ public class MatchScoreCalculationService {
 
     }
 
-    public void countPointIfTieBreak(Match match, Player scoringPlayer) {
+    private void countPointIfTieBreak(Match match, Player scoringPlayer) {
         incrementTieBreakPoint(scoringPlayer);
         if (isTieBreakCompleted(match)) {
             scoringPlayer.getPlayerScore().winSet();
@@ -56,14 +55,14 @@ public class MatchScoreCalculationService {
     }
 
 
-    public void checkIsAdvantage(Match match) {
+    private void checkIsAdvantage(Match match) {
         if (match.getPlayer1().getPlayerScore().getPoint() == Point.FORTY
                 && match.getPlayer2().getPlayerScore().getPoint() == Point.FORTY) {
             match.setMatchStatus(MatchStatus.ADVANTAGE);
         }
     }
 
-    public void checkIsTieBreak(Match match) {
+    private void checkIsTieBreak(Match match) {
         if (match.getPlayer1().getPlayerScore().getGame() == 6
                 && match.getPlayer2().getPlayerScore().getGame() == 6) {
             match.setMatchStatus(MatchStatus.TIE_BREAK);
@@ -141,7 +140,6 @@ public class MatchScoreCalculationService {
         }
     }
 
-    // Оставил паблик, что бы можно было использовать в тестах
     public void incrementPoint(Match match, Player scoringPlayer) {
         if (scoringPlayer.getPlayerScore().getPoint() == Point.FORTY) {
             scoringPlayer.getPlayerScore().setPoint(Point.LOVE);
