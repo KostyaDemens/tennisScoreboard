@@ -1,7 +1,6 @@
 package by.bsuir.kostyademens.tennisscoreboard.service;
 
 import by.bsuir.kostyademens.tennisscoreboard.dao.MatchDao;
-import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.util.SessionFactoryUtil;
 
@@ -17,15 +16,19 @@ public class FinishedMatchPersistenceService {
         matchDao.save(match);
     }
 
-    public List<Match> selectAllMatches(int page, int recordsPerPage) {
-        return matchDao.viewAllMatches(page, recordsPerPage);
+    public List<Match> selectMatches(int page, int recordsPerPage) {
+        return matchDao.getMatches(page, recordsPerPage);
     }
 
-    public List<Match> filterMatchesByName(String name, int page, int recordsPerPage) {
+    public List<Match> selectMatchesFilteredByName(String name, int page, int recordsPerPage) {
         return matchDao.findByName(name, page, recordsPerPage);
     }
 
-    public int getNoOfRecords() {
-        return matchDao.getNoOfRecords();
+    public long getTotalMatchesCount() {
+        return matchDao.countAll();
+    }
+
+    public long getTotalMatchesCountByName(String name) {
+        return matchDao.countByName(name);
     }
 }

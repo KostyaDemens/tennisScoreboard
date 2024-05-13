@@ -3,7 +3,6 @@ package by.bsuir.kostyademens.tennisscoreboard.dao;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.util.SessionFactoryUtil;
 import jakarta.persistence.TypedQuery;
-import lombok.Getter;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -12,8 +11,6 @@ public class MatchDao {
 
     private final SessionFactoryUtil sessionFactoryUtil;
 
-    @Getter
-    private int noOfRecords;
 
     public MatchDao(SessionFactoryUtil sessionFactoryUtil) {
         this.sessionFactoryUtil = sessionFactoryUtil;
@@ -28,14 +25,13 @@ public class MatchDao {
         }
     }
 
-    public List<Match> viewAllMatches(int offset, int noOfRecords) {
+    public List<Match> getMatches(int offset, int noOfRecords) {
         try (Session session = sessionFactoryUtil.getSession()) {
             session.beginTransaction();
             TypedQuery<Match> matchesQuery = session.createQuery("SELECT m from Match m", Match.class);
             matchesQuery.setFirstResult(offset);
             matchesQuery.setMaxResults(noOfRecords);
             List<Match> matches = matchesQuery.getResultList();
-            this.noOfRecords = countAllMatchesInTheDataBase();
             session.getTransaction().commit();
             return matches;
         }
@@ -49,32 +45,29 @@ public class MatchDao {
             matchesQuery.setFirstResult(offset);
             matchesQuery.setMaxResults(noOfRecords);
             List<Match> matches = matchesQuery.getResultList();
-            this.noOfRecords = countMatchesByName(name);
             session.getTransaction().commit();
             return matches;
         }
     }
 
-    public int countAllMatchesInTheDataBase() {
+    public long countAll() {
         try (Session session = sessionFactoryUtil.getSession()) {
             session.beginTransaction();
             TypedQuery<Long> countQuery = session.createQuery("SELECT COUNT(m) FROM Match m", Long.class);
             long totalRecords = countQuery.getSingleResult();
-            this.noOfRecords = (int) totalRecords;
             session.getTransaction().commit();
-            return this.noOfRecords;
+            return totalRecords;
         }
     }
 
-    public int countMatchesByName(String name) {
+    public long countByName(String name) {
         try (Session session = sessionFactoryUtil.getSession()) {
             session.beginTransaction();
             TypedQuery<Long> matches = session.createQuery("select count(m) from Match m WHERE m.player1.name = :name or m.player2.name = :name", Long.class)
                     .setParameter("name", name);
             long totalRecords = matches.getSingleResult();
-            this.noOfRecords = (int) totalRecords;
             session.getTransaction().commit();
-            return this.noOfRecords;
+            return totalRecords;
         }
     }
 

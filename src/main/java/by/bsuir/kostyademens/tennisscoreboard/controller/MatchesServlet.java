@@ -2,7 +2,6 @@ package by.bsuir.kostyademens.tennisscoreboard.controller;
 
 import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
 import by.bsuir.kostyademens.tennisscoreboard.mapper.EntityMapper;
-import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.service.FinishedMatchPersistenceService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -14,8 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.util.Arrays.stream;
 
 @WebServlet("/matches")
 public class MatchesServlet extends HttpServlet {
@@ -30,30 +27,31 @@ public class MatchesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String playerName = req.getParameter("filter_by_player_name");
+        long noOfPage;
         int page = 1;
         int recordsPerPage = 5;
         if (req.getParameter("page") != null) {
             page = Integer.parseInt(req.getParameter("page"));
         }
 
+
+        int offset = (page - 1) * recordsPerPage;
+
         List<MatchDto> matches;
-
-
         if (playerName == null || playerName.isEmpty()) {
-            matches = finishedService.selectAllMatches((page - 1) * recordsPerPage, recordsPerPage)
+            matches = finishedService.selectMatches(offset, recordsPerPage)
                     .stream().map(EntityMapper::toDto)
                     .collect(Collectors.toList());
+            noOfPage = (int) Math.ceil(finishedService.getTotalMatchesCount() * 1.0 / recordsPerPage);
         } else {
             playerName = playerName.toUpperCase();
-            matches = finishedService.filterMatchesByName(playerName, (page - 1) * recordsPerPage, recordsPerPage)
+            matches = finishedService.selectMatchesFilteredByName(playerName, offset, recordsPerPage)
                     .stream().map(EntityMapper::toDto)
                     .collect(Collectors.toList());
             req.setAttribute("filter_by_player_name", playerName);
+            noOfPage = (int) Math.ceil(finishedService.getTotalMatchesCountByName(playerName) * 1.0 / recordsPerPage);
         }
-        int noOfRecords = finishedService.getNoOfRecords();
 
-        //Определяем сколько нам нужно страниц
-        int noOfPage = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
         req.setAttribute("noOfPage", noOfPage);
         req.setAttribute("currentPage", page);
