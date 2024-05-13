@@ -10,8 +10,8 @@
 </head>
 <body>
 <div class="links_container">
-    <a href="${pageContext.request.contextPath}/new-match">New match</a>
-    <a href="${pageContext.request.contextPath}/matches">Matches history</a>
+    <a href="${pageContext.request.contextPath}new-match">New match</a>
+    <a href="${pageContext.request.contextPath}matches">Matches history</a>
 </div>
 </body>
 </html>

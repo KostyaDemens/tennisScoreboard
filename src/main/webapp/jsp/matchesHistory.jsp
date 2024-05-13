@@ -6,11 +6,11 @@
     <%@include file="/css/matchesHistory.css"%>
 </style>
 <head>
-    <title>HELLO WORLD</title>
+    <title>TENNIS - HISTORY</title>
 </head>
 <body>
 <h1>Matches history</h1>
-<form id="search-form" method="get" action="${pageContext.request.contextPath}/matches">
+<form id="search-form" method="get" action="${pageContext.request.contextPath}matches">
     <div class="search-bar">
         <label>
             <input id="player-name-input" type="text" name="filter_by_player_name" placeholder="Write player name">
@@ -22,7 +22,6 @@
     </div>
     <div class="button-container">
         <button type="button" onclick="forwardToTheMainPage()">To the main page</button>
-
     </div>
 </form>
 
@@ -36,7 +35,7 @@
     }
 
     function resetForm() {
-        window.location.href="${pageContext.request.contextPath}/matches"
+        window.location.href="${pageContext.request.contextPath}matches"
     }
 
     function forwardToTheMainPage() {
@@ -47,9 +46,9 @@
 <div class="container">
     <table>
         <tr>
-            <td><strong>Player one name</strong></td>
-            <td><strong>Player two name</strong></td>
-            <td><strong>Winner</strong></td>
+            <th><strong>Player one name</strong></th>
+            <th><strong>Player two name</strong></th>
+            <th><strong>Winner</strong></th>
         </tr>
         <c:forEach var="match" items="${requestScope.matches}">
             <tr>
@@ -69,11 +68,11 @@
                 <c:otherwise>
                     <c:choose>
                         <c:when test="${empty filter_by_player_name or filter_by_player_name eq null}">
-                            <a class="page-link" href="${pageContext.request.contextPath}/matches?page=${i}">${i}</a>
+                            <a class="page-link" href="${pageContext.request.contextPath}matches?page=${i}">${i}</a>
                         </c:when>
                         <c:otherwise>
                             <a class="page-link"
-                               href="${pageContext.request.contextPath}/matches?page=${i}&filter_by_player_name=${filter_by_player_name}">${i}</a>
+                               href="${pageContext.request.contextPath}matches?page=${i}&filter_by_player_name=${filter_by_player_name}">${i}</a>
                         </c:otherwise>
                     </c:choose>
                 </c:otherwise>

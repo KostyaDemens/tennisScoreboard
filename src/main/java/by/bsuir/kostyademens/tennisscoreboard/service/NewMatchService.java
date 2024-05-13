@@ -8,7 +8,7 @@ import by.bsuir.kostyademens.tennisscoreboard.util.SessionFactoryUtil;
 
 public class NewMatchService {
 
-    private final SessionFactoryUtil sessionFactoryUtil = new SessionFactoryUtil();
+    private final SessionFactoryUtil sessionFactoryUtil = SessionFactoryUtil.getInstance();
     private final PlayerDao playerDao = new PlayerDao(sessionFactoryUtil);
 
 

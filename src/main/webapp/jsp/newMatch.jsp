@@ -6,7 +6,7 @@
     <%@include file="/css/newMatch.css"%>
 </style>
 <head>
-    <title>Tennis</title>
+    <title>TENNIS - NEW MATCH</title>
 </head>
 <body>
 <h1>Create new match</h1>
@@ -16,7 +16,7 @@
 </div>
 <% } %>
 
-<form method="post" action="${pageContext.request.contextPath}/new-match">
+<form method="post" action="${pageContext.request.contextPath}new-match">
     <div class="input-container">
         <div>
             <p>Player 1</p>

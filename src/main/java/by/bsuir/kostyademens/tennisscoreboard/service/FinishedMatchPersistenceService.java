@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FinishedMatchPersistenceService {
 
-    private final SessionFactoryUtil sessionFactoryUtil = new SessionFactoryUtil();
+    private final SessionFactoryUtil sessionFactoryUtil = SessionFactoryUtil.getInstance();
 
     private final MatchDao matchDao = new MatchDao(sessionFactoryUtil);
 

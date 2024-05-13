@@ -21,13 +21,13 @@ public class MatchScoreCalculationService {
         Player losingPlayer = getLosingPlayer(match, player);
 
 
-        checkIsAdvantage(match);
+        setAdvantageStatusIfNecessary(match);
         if (match.getMatchStatus() == MatchStatus.ADVANTAGE) {
             countPointIfAdvantage(match, scoringPlayer, losingPlayer);
             return;
         }
 
-        checkIsTieBreak(match);
+        setTieBreakStatusIfNecessary(match);
         if (match.getMatchStatus() == MatchStatus.TIE_BREAK) {
             countPointIfTieBreak(match, scoringPlayer);
             return;
@@ -55,14 +55,14 @@ public class MatchScoreCalculationService {
     }
 
 
-    private void checkIsAdvantage(Match match) {
+    private void setAdvantageStatusIfNecessary(Match match) {
         if (match.getPlayer1().getPlayerScore().getPoint() == Point.FORTY
                 && match.getPlayer2().getPlayerScore().getPoint() == Point.FORTY) {
             match.setMatchStatus(MatchStatus.ADVANTAGE);
         }
     }
 
-    private void checkIsTieBreak(Match match) {
+    private void setTieBreakStatusIfNecessary(Match match) {
         if (match.getPlayer1().getPlayerScore().getGame() == 6
                 && match.getPlayer2().getPlayerScore().getGame() == 6) {
             match.setMatchStatus(MatchStatus.TIE_BREAK);

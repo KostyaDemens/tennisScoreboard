@@ -8,7 +8,7 @@
 </style>
 
 <head>
-    <title>Match score</title>
+    <title>TENNIS - SCORE</title>
 </head>
 <body>
 <c:choose>
@@ -16,10 +16,10 @@
         <div class="container">
             <table>
                 <tr>
-                    <td><strong>PLAYER</strong></td>
-                    <td><strong>SETS</strong></td>
-                    <td><strong>GAMES</strong></td>
-                    <td><strong>POINTS</strong></td>
+                    <th><strong>PLAYER</strong></th>
+                    <th><strong>SETS</strong></th>
+                    <th><strong>GAMES</strong></th>
+                    <th><strong>POINTS</strong></th>
                 </tr>
                 <tr>
                     <td>${match.playerOne.playerName}</td>
@@ -54,12 +54,12 @@
             </table>
 
             <div class="ui-button">
-                <form method="post">
+                <form method="post" action="${pageContext.request.contextPath}match-score?uuid=${param.uuid}">
                     <button class="first-button" name="player_id" type="submit" value="1">
                         Player 1 wins point!
                     </button>
                 </form>
-                <form method="post">
+                <form method="post" action="${pageContext.request.contextPath}match-score?uuid=${param.uuid}">
                     <button class="second-button" name="player_id" type="submit" value="2">
                         Player 2 wins point!
                     </button>

@@ -55,9 +55,6 @@ public class MatchScoreServlet extends HttpServlet {
         String player_id = req.getParameter("player_id");
 
         Match match = onGoingMatchesService.get(uuid);
-        match.getPlayer1().getPlayerScore().setPoint(Point.FORTY);
-        match.getPlayer1().getPlayerScore().setGame(5);
-        match.getPlayer1().getPlayerScore().setSet(1);
 
         PlayerNumber playerNumber = getPlayerNumber(player_id);
         calculationService.makeCalculations(match, playerNumber);
