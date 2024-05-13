@@ -41,7 +41,7 @@ public class NewMatchServlet extends HttpServlet {
         Player firstPlayer = new Player(playerOne.toUpperCase());
         Player secondPlayer = new Player(playerTwo.toUpperCase());
 
-        if (isNameValid(firstPlayer.getName()) || isNameValid(secondPlayer.getName()) || firstPlayer.getName().equals(secondPlayer.getName())) {
+        if (isNameInvalid(firstPlayer.getName()) || isNameInvalid(secondPlayer.getName()) || firstPlayer.getName().equals(secondPlayer.getName())) {
             req.setAttribute("errorMessage", "Некорректное имя игрока. Оно не должно содержать никаких символов, кроме символов русского и английского алфавита");
             req.getRequestDispatcher("/jsp/newMatch.jsp").forward(req, resp);
             return;
@@ -57,7 +57,7 @@ public class NewMatchServlet extends HttpServlet {
 
     }
 
-    private boolean isNameValid(String name) {
+    private boolean isNameInvalid(String name) {
         if (name == null) {
             return true;
         }

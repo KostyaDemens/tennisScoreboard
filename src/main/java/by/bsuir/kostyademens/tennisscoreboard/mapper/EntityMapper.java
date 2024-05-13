@@ -10,12 +10,15 @@ import by.bsuir.kostyademens.tennisscoreboard.model.PlayerScore;
 
 public class EntityMapper {
 
-
     public static MatchDto toDto(Match match) {
+        if (match == null) {
+            return null;
+        }
+
         PlayerDto playerOneDto = toDto(match.getPlayer1());
         PlayerDto playerTwoDto = toDto(match.getPlayer2());
+        PlayerDto playerWinnerDto = toDto(match.getWinner());
 
-        PlayerDto playerWinnerDto = match.getWinner() != null ? toDto(match.getWinner()) : null;
         return MatchDto.builder()
                 .playerOne(playerOneDto)
                 .playerTwo(playerTwoDto)
@@ -25,6 +28,10 @@ public class EntityMapper {
     }
 
     public static PlayerDto toDto(Player player) {
+        if (player == null) {
+            return null;
+        }
+
         PlayerScoreDto playerScoreDto = toDto(player.getPlayerScore());
         return PlayerDto.builder()
                 .playerName(player.getName())
@@ -33,6 +40,9 @@ public class EntityMapper {
     }
 
     private static PlayerScoreDto toDto(PlayerScore playerScore) {
+        if (playerScore == null) {
+            return null;
+        }
         return PlayerScoreDto.builder()
                 .point(playerScore.getPoint())
                 .set(playerScore.getSet())
