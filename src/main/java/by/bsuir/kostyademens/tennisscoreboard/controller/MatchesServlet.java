@@ -1,6 +1,8 @@
 package by.bsuir.kostyademens.tennisscoreboard.controller;
 
 import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
+import by.bsuir.kostyademens.tennisscoreboard.mapper.EntityMapper;
+import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.service.FinishedMatchPersistenceService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -11,6 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.stream;
 
 @WebServlet("/matches")
 public class MatchesServlet extends HttpServlet {
@@ -35,11 +40,14 @@ public class MatchesServlet extends HttpServlet {
 
 
         if (playerName == null || playerName.isEmpty()) {
-            matches = finishedService.selectAllMatches((page - 1) * recordsPerPage, recordsPerPage);
-
+            matches = finishedService.selectAllMatches((page - 1) * recordsPerPage, recordsPerPage)
+                    .stream().map(EntityMapper::toDto)
+                    .collect(Collectors.toList());
         } else {
             playerName = playerName.toUpperCase();
-            matches = finishedService.filterMatchesByName(playerName, (page - 1) * recordsPerPage, recordsPerPage);
+            matches = finishedService.filterMatchesByName(playerName, (page - 1) * recordsPerPage, recordsPerPage)
+                    .stream().map(EntityMapper::toDto)
+                    .collect(Collectors.toList());
             req.setAttribute("filter_by_player_name", playerName);
         }
         int noOfRecords = finishedService.getNoOfRecords();

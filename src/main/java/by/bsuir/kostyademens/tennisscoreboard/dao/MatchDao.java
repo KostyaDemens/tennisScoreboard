@@ -1,14 +1,11 @@
 package by.bsuir.kostyademens.tennisscoreboard.dao;
 
-import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
-import by.bsuir.kostyademens.tennisscoreboard.mapper.EntityMapper;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.util.SessionFactoryUtil;
 import jakarta.persistence.TypedQuery;
 import lombok.Getter;
 import org.hibernate.Session;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MatchDao {
@@ -31,37 +28,31 @@ public class MatchDao {
         }
     }
 
-    public List<MatchDto> viewAllMatches(int offset, int noOfRecords) {
+    public List<Match> viewAllMatches(int offset, int noOfRecords) {
         try (Session session = sessionFactoryUtil.getSession()) {
             session.beginTransaction();
             TypedQuery<Match> matchesQuery = session.createQuery("SELECT m from Match m", Match.class);
             matchesQuery.setFirstResult(offset);
             matchesQuery.setMaxResults(noOfRecords);
+            List<Match> matches = matchesQuery.getResultList();
             this.noOfRecords = countAllMatchesInTheDataBase();
-            return getMatchDtos(session, matchesQuery);
+            session.getTransaction().commit();
+            return matches;
         }
     }
 
-    public List<MatchDto> findByName(String name, int offset, int noOfRecords) {
+    public List<Match> findByName(String name, int offset, int noOfRecords) {
         try (Session session = sessionFactoryUtil.getSession()) {
             session.beginTransaction();
             TypedQuery<Match> matchesQuery = session.createQuery("select m from Match m where m.player1.name = :name OR m.player2.name = :name", Match.class)
                     .setParameter("name", name);
             matchesQuery.setFirstResult(offset);
             matchesQuery.setMaxResults(noOfRecords);
+            List<Match> matches = matchesQuery.getResultList();
             this.noOfRecords = countMatchesByName(name);
-            return getMatchDtos(session, matchesQuery);
+            session.getTransaction().commit();
+            return matches;
         }
-    }
-
-    private List<MatchDto> getMatchDtos(Session session, TypedQuery<Match> matchesQuery) {
-        List<Match> matches = matchesQuery.getResultList();
-        session.getTransaction().commit();
-        List<MatchDto> matchDtos = new ArrayList<>();
-        for (Match match : matches) {
-            matchDtos.add(EntityMapper.toDto(match));
-        }
-        return matchDtos;
     }
 
     public int countAllMatchesInTheDataBase() {

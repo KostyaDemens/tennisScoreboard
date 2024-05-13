@@ -17,11 +17,11 @@ public class FinishedMatchPersistenceService {
         matchDao.save(match);
     }
 
-    public List<MatchDto> selectAllMatches(int page, int recordsPerPage) {
+    public List<Match> selectAllMatches(int page, int recordsPerPage) {
         return matchDao.viewAllMatches(page, recordsPerPage);
     }
 
-    public List<MatchDto> filterMatchesByName(String name, int page, int recordsPerPage) {
+    public List<Match> filterMatchesByName(String name, int page, int recordsPerPage) {
         return matchDao.findByName(name, page, recordsPerPage);
     }
 
