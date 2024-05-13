@@ -31,15 +31,14 @@ public class Match {
     @ManyToOne
     @JoinColumn(name = "winner", nullable = false)
     private Player winner;
+    @Transient
+    @Builder.Default
+    private MatchStatus matchStatus = MatchStatus.ONGOING;
 
     public Match(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
     }
-
-    @Transient //Нужна для того, чтобы исключить поле из процесса отображения в базу данных
-    @Builder.Default
-    private MatchStatus matchStatus = MatchStatus.ONGOING;
 
 
 }

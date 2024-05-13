@@ -10,10 +10,10 @@ public class SessionFactoryUtil {
 
     @Getter
     private final static SessionFactoryUtil instance = new SessionFactoryUtil();
-
-    private SessionFactoryUtil(){}
-
     private SessionFactory sessionFactory;
+
+    private SessionFactoryUtil() {
+    }
 
     public void init() {
         sessionFactory = new Configuration()

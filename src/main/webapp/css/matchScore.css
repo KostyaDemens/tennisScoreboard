@@ -17,9 +17,11 @@ table {
     border-collapse: collapse;
     margin-bottom: 20px;
 }
+
 table, th, td {
     border: 1px solid black;
 }
+
 th, td {
     padding: 10px;
     text-align: center;
@@ -31,14 +33,15 @@ th, td {
     gap: 150px;
     justify-content: space-between;
 }
+
 .first-button, .second-button {
-        padding: 10px 20px;
-        background-color: #0074D9;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        width: 180px;
+    padding: 10px 20px;
+    background-color: #0074D9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 180px;
 }
 
 

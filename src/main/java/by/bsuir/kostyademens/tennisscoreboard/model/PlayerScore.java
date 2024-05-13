@@ -7,11 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PlayerScore {
+    Point point = Point.LOVE;
     private int tieBreakPoint;
     private int game;
     private int set;
-    Point point = Point.LOVE;
-
 
     public void winPoint() {
         switch (point) {

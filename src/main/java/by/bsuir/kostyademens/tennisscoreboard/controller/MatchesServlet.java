@@ -28,10 +28,17 @@ public class MatchesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String playerName = req.getParameter("filter_by_player_name");
         long noOfPage;
-        int page = 1;
         int recordsPerPage = 5;
+        int page = 1;
         if (req.getParameter("page") != null) {
-            page = Integer.parseInt(req.getParameter("page"));
+            try {
+                page = Integer.parseInt(req.getParameter("page"));
+                if (page <= 0) {
+                    page = 1;
+                }
+            } catch (NumberFormatException ignored) {
+
+            }
         }
 
 

@@ -3,7 +3,6 @@ package by.bsuir.kostyademens.tennisscoreboard.controller;
 import by.bsuir.kostyademens.tennisscoreboard.dto.MatchDto;
 import by.bsuir.kostyademens.tennisscoreboard.mapper.EntityMapper;
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
-import by.bsuir.kostyademens.tennisscoreboard.model.Point;
 import by.bsuir.kostyademens.tennisscoreboard.service.FinishedMatchPersistenceService;
 import by.bsuir.kostyademens.tennisscoreboard.service.MatchScoreCalculationService;
 import by.bsuir.kostyademens.tennisscoreboard.service.OnGoingMatchesService;
@@ -21,11 +20,10 @@ import java.util.UUID;
 
 @WebServlet("/match-score")
 public class MatchScoreServlet extends HttpServlet {
+    private static final String PLAYER_ID = "1";
     private OnGoingMatchesService onGoingMatchesService;
     private MatchScoreCalculationService calculationService;
     private FinishedMatchPersistenceService persistenceService;
-    private static final String PLAYER_ID = "1";
-
 
     @Override
     public void init(ServletConfig config) {

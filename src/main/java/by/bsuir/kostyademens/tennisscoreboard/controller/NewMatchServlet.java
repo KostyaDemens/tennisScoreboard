@@ -34,7 +34,6 @@ public class NewMatchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        // Эти параметры мы получаем из newMatch.jsp страницы, используем их для создания объекта Player
         String playerOne = req.getParameter("player-1");
         String playerTwo = req.getParameter("player-2");
 
@@ -47,11 +46,9 @@ public class NewMatchServlet extends HttpServlet {
             return;
         }
 
-        // Генерируем UUID и кладём матч в коллекцию матчей
         Match match = newMatchService.createNewMatch(firstPlayer, secondPlayer);
         UUID uuid = onGoingMatchesService.add(match);
 
-        // Редирект на страницу /match-score?uuid=uuid
         resp.sendRedirect(req.getContextPath() + "match-score?uuid=" + uuid);
 
 

@@ -1,11 +1,11 @@
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
 import by.bsuir.kostyademens.tennisscoreboard.model.Point;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import by.bsuir.kostyademens.tennisscoreboard.service.MatchScoreCalculationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameCountTest {
 
@@ -33,9 +33,6 @@ public class GameCountTest {
 
         service.incrementPoint(match, playerOne);
         assertEquals(1, playerOne.getPlayerScore().getGame());
-
-
-
 
 
     }

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <style>
@@ -35,11 +35,11 @@
     }
 
     function resetForm() {
-        window.location.href="${pageContext.request.contextPath}matches"
+        window.location.href = "${pageContext.request.contextPath}matches"
     }
 
     function forwardToTheMainPage() {
-        window.location.href="${pageContext.request.contextPath}/"
+        window.location.href = "${pageContext.request.contextPath}/"
     }
 </script>
 
