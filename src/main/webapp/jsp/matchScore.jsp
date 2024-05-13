@@ -55,12 +55,12 @@
 
             <div class="ui-button">
                 <form method="post" action="${pageContext.request.contextPath}match-score?uuid=${param.uuid}">
-                    <button class="first-button" name="player_id" type="submit" value="1">
+                    <button class="first-button" name="playerId" type="submit" value="1">
                         Player 1 wins point!
                     </button>
                 </form>
                 <form method="post" action="${pageContext.request.contextPath}match-score?uuid=${param.uuid}">
-                    <button class="second-button" name="player_id" type="submit" value="2">
+                    <button class="second-button" name="playerId" type="submit" value="2">
                         Player 2 wins point!
                     </button>
                 </form>

@@ -52,20 +52,20 @@ public class MatchScoreServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
-        String player_id = req.getParameter("player_id");
+        String playerId = req.getParameter("playerId");
 
         Match match = onGoingMatchesService.get(uuid);
 
-        PlayerNumber playerNumber = getPlayerNumber(player_id);
+        PlayerNumber playerNumber = getPlayerNumber(playerId);
         calculationService.makeCalculations(match, playerNumber);
 
 
-        resp.sendRedirect("/match-score?uuid=" + uuid);
+        resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + uuid);
 
 
     }
 
-    private PlayerNumber getPlayerNumber(String player_id) {
-        return player_id.equals(PLAYER_ID) ? PlayerNumber.FIRST_PLAYER : PlayerNumber.SECOND_PLAYER;
+    private PlayerNumber getPlayerNumber(String playerId) {
+        return playerId.equals(PLAYER_ID) ? PlayerNumber.FIRST_PLAYER : PlayerNumber.SECOND_PLAYER;
     }
 }

@@ -1,4 +1,4 @@
-package by.bsuir.kostyademens.tennisscoreboard.controller;
+package by.bsuir.kostyademens.tennisscoreboard.listener;
 
 import by.bsuir.kostyademens.tennisscoreboard.service.FinishedMatchPersistenceService;
 import by.bsuir.kostyademens.tennisscoreboard.service.MatchScoreCalculationService;

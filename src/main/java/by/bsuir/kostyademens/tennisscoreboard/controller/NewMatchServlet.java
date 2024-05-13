@@ -52,7 +52,7 @@ public class NewMatchServlet extends HttpServlet {
         UUID uuid = onGoingMatchesService.add(match);
 
         // Редирект на страницу /match-score?uuid=uuid
-        resp.sendRedirect("match-score?uuid=" + uuid);
+        resp.sendRedirect(req.getContextPath() + "match-score?uuid=" + uuid);
 
 
     }
