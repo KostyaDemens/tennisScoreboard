@@ -13,23 +13,19 @@ import lombok.*;
 @Table(name = "players")
 public class Player {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", nullable = false)
+  private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+  @Column(name = "name", nullable = false)
+  private String name;
 
-    @Transient
-    private PlayerScore playerScore = new PlayerScore();
+  @Transient private PlayerScore playerScore = new PlayerScore();
 
-    @Transient
-    private PlayerNumber playerNumber;
+  @Transient private PlayerNumber playerNumber;
 
-
-    public Player(String name) {
-        this.name = name;
-    }
-
+  public Player(String name) {
+    this.name = name;
+  }
 }

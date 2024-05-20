@@ -9,8 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlayerScoreDto {
-    private Point point;
-    private int set;
-    private int game;
-    private int tieBreakPoint;
+  private Point point;
+  private int set;
+  private int game;
+  private int tieBreakPoint;
 }

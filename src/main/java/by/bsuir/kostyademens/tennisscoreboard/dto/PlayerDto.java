@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlayerDto {
-    private String playerName;
-    private PlayerScoreDto playerScore;
+  private String playerName;
+  private PlayerScoreDto playerScore;
 }
-

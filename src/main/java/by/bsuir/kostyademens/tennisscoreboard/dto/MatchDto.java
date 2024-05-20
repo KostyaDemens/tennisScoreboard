@@ -1,7 +1,6 @@
 package by.bsuir.kostyademens.tennisscoreboard.dto;
 
-
-import by.bsuir.kostyademens.tennisscoreboard.util.MatchStatus;
+import by.bsuir.kostyademens.tennisscoreboard.model.MatchStatus;
 import lombok.*;
 
 @Builder
@@ -10,9 +9,8 @@ import lombok.*;
 @Getter
 @Setter
 public class MatchDto {
-    private PlayerDto playerOne;
-    private PlayerDto playerTwo;
-    private PlayerDto playerWinner;
-    private MatchStatus status;
+  private PlayerDto playerOne;
+  private PlayerDto playerTwo;
+  private PlayerDto playerWinner;
+  private MatchStatus status;
 }
-

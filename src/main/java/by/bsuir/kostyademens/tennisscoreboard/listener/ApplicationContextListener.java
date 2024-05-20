@@ -12,13 +12,13 @@ import jakarta.servlet.annotation.WebListener;
 @WebListener
 public class ApplicationContextListener implements ServletContextListener {
 
-    @Override
-    public void contextInitialized(ServletContextEvent sce) {
-        ServletContext context = sce.getServletContext();
+  @Override
+  public void contextInitialized(ServletContextEvent sce) {
+    ServletContext context = sce.getServletContext();
 
-        context.setAttribute("newMatchService", new NewMatchService());
-        context.setAttribute("onGoingMatchesService", new OnGoingMatchesService());
-        context.setAttribute("matchScoreCalculationService", new MatchScoreCalculationService());
-        context.setAttribute("finishedMatchPersistenceService", new FinishedMatchPersistenceService());
-    }
+    context.setAttribute("newMatchService", new NewMatchService());
+    context.setAttribute("onGoingMatchesService", new OnGoingMatchesService());
+    context.setAttribute("matchScoreCalculationService", new MatchScoreCalculationService());
+    context.setAttribute("finishedMatchPersistenceService", new FinishedMatchPersistenceService());
+  }
 }
