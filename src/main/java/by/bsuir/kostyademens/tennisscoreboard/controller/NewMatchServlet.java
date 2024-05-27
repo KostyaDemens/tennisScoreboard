@@ -2,7 +2,6 @@ package by.bsuir.kostyademens.tennisscoreboard.controller;
 
 import by.bsuir.kostyademens.tennisscoreboard.model.Match;
 import by.bsuir.kostyademens.tennisscoreboard.model.Player;
-import by.bsuir.kostyademens.tennisscoreboard.model.Point;
 import by.bsuir.kostyademens.tennisscoreboard.service.NewMatchService;
 import by.bsuir.kostyademens.tennisscoreboard.service.OnGoingMatchesService;
 import jakarta.servlet.ServletConfig;
@@ -41,10 +40,6 @@ public class NewMatchServlet extends HttpServlet {
 
     Player firstPlayer = new Player(playerOne.toUpperCase());
     Player secondPlayer = new Player(playerTwo.toUpperCase());
-
-    firstPlayer.getPlayerScore().setSet(1);
-    firstPlayer.getPlayerScore().setGame(5);
-    firstPlayer.getPlayerScore().setPoint(Point.FORTY);
 
     if (isNameInvalid(firstPlayer.getName()) || isNameInvalid(secondPlayer.getName())) {
       req.setAttribute(
