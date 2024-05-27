@@ -1,0 +1,23 @@
+body {
+    overflow: hidden;
+}
+
+
+.links_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    height: 100vh;
+}
+
+.links_container a {
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #333;
+}
+
+

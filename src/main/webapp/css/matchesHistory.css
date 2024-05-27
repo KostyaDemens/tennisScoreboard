@@ -1,0 +1,89 @@
+body {
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: -250px;
+    height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 100px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Размещение по горизонтали */
+    justify-content: center; /* Размещение по вертикали */
+    height: 20vh; /* Высота формы равна высоте экрана */
+}
+
+/* Стили для текстового поля */
+input[type="text"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+}
+
+/* Стили для кнопок */
+button {
+    padding: 10px 20px;
+    background-color: #0074D9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px;
+}
+
+.button-container {
+    display: inline-block;
+}
+
+.button-container button {
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center; /* Размещение по горизонтали */
+    margin-top: 20px; /* Добавьте отступ сверху */
+}
+
+.pagination a {
+    text-decoration: none;
+    color: black;
+    padding: 8px 16px;
+    transition: .4s;
+}
+
+.pagination a.active {
+    background: white;
+}
+
+.pagination a:hover:not(.active) {
+    background: white;
+}

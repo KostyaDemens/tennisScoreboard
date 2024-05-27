@@ -1,0 +1,70 @@
+body {
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+
+table {
+    width: 80%;
+    max-width: 600px;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+
+.ui-button {
+    display: flex;
+    gap: 150px;
+    justify-content: space-between;
+}
+
+.first-button, .second-button {
+    padding: 10px 20px;
+    background-color: #0074D9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 180px;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Высота контейнера равна высоте экрана */
+}
+
+
+.text {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+
+.link {
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #333;
+}
